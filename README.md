@@ -1,24 +1,23 @@
-
-# SW14_XP_05
-
+###### $$$
+# SW14_XP Group 05
+###### $$$
 ## Project
 
 ### Description:
 
-### Project Setup
+### Project Setup:
 
 ### Testing:
 
 #### Unit Tests:
 
 
-#### Troubleshooting & Useful Tools;
+#### Troubleshooting & Useful Tools:
 
-#### Examples of common tasks;
+#### Examples of common tasks:
 
 
 ### Contributing:
-
 * Manager: Bianca Helbig
 * Customer: Juergen Sunitsch
 * Coach: Andreas Mili
