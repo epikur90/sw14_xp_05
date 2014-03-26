@@ -1,6 +1,5 @@
-###### $$$
 # SW14_XP Group 05
-###### $$$
+
 ## Project
 
 ### Description:
