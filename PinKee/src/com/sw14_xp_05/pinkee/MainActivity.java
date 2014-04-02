@@ -5,6 +5,12 @@ import java.awt.MenuItem;
 
 import javax.swing.text.View;
 
+import android.app.Fragment;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+
 public class MainActivity extends ActionBarActivity {
 
 	@Override
@@ -18,6 +24,8 @@ public class MainActivity extends ActionBarActivity {
 		}
 	}
 
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
