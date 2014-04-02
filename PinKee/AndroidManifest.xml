@@ -24,7 +24,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.sw14_xp_05.pinkee.MainActivity"
+            android:name="com.sw14_xp_05.pinkee.ListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,8 +32,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+          <provider
+              android:name=".DataProvider"
+              android:authorities="com.appsrox.instachat.provider"
+              android:exported="false" >
+          </provider>
+    
+          
+
     </application>
 
-
-    
 </manifest>
