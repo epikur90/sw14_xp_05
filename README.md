@@ -1,5 +1,5 @@
-### PinKee
-# The _PINK_ alternative
+# PinKee
+### The _PINK_ alternative
 
 ## Synopsis
 
