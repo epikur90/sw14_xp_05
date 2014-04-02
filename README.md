@@ -11,20 +11,25 @@ Describe and show how to run the tests with code examples.
 
 ## Contributors
 
-Manager: Bianca Helbig
+####Manager: 
+Bianca Helbig
 
-Customer: Juergen Sunitsch
+####Customer: 
+Juergen Sunitsch
 
-Coach: Andreas Mili
+####Coach: 
+Andreas Mili
 
-Developer/Usability Engineer: Stefan Maggale
+####Developer/Usability Engineer: 
+Stefan Maggale
 
-Developers: 
-  Matthias Ivantsits
-  Michael Scheucher
-  Daniel Moser
-  Michael Maresch
-  PatrickOberlohr
+####Developers:
+
+  Matthias Ivantsits,
+  Michael Scheucher,
+  Daniel Moser,
+  Michael Maresch,
+  PatrickOberlohr,
   David Marogy
 
 
