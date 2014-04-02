@@ -1,4 +1,4 @@
-package com.example.pinkee;
+package com.sw14_xp_05.pinkee;
 
 import java.util.ArrayList;
 import android.os.Bundle;
