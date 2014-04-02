@@ -1,14 +1,9 @@
 package com.sw14_xp_05.pinkee;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import com.sw14_xp_05.pinkee.R;
+import java.awt.Menu;
+import java.awt.MenuItem;
+
+import javax.swing.text.View;
 
 public class MainActivity extends ActionBarActivity {
 
