@@ -9,9 +9,9 @@
         android:targetSdkVersion="19" />
     
     <permission
-    android:name="com.example.pinkee.permission.C2D_MESSAGE"
+    android:name="com.sw14_xp_05.pinkee.permission.C2D_MESSAGE"
     android:protectionLevel="signature" />
-	<uses-permission android:name="com.appsrox.instachat.permission.C2D_MESSAGE" />
+	<uses-permission android:name="com.sw14_xp_05.pinkee.permission.C2D_MESSAGE" />
  
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
