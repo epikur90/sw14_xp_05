@@ -3,6 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     tools:context="com.example.pinkee.ListActivity"
     tools:ignore="MergeRootFrame" >
 
@@ -13,3 +14,7 @@
         android:layout_height="wrap_content" >
       </ListView>
 </RelativeLayout>
+=======
+    tools:context="com.sw14_xp_05.pinkee.MainActivity"
+    tools:ignore="MergeRootFrame" />
+>>>>>>> 8d332f42ca6bf5e00ad62eef6dea49b1c82bb7e2

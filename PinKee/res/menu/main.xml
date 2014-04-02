@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.pinkee.MainActivity" >
+    tools:context="com.sw14_xp_05.pinkee.MainActivity" >
 
     <item
         android:id="@+id/action_settings"
