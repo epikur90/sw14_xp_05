@@ -1,7 +1,10 @@
 PinKee/bin
 PinKee/lint.xml
+PinKee/.classpath
 appcompat_v7/bin
+appcompat_v7/.classpath
 google-play-services_lib/bin
 PinKee/gen
 appcompat_v7/gen
 google-play-services_lib/gen
+google-play-services_lib/classpath
