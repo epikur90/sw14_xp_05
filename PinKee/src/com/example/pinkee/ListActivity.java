@@ -1,27 +1,44 @@
 package com.example.pinkee;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+
+import java.util.ArrayList;
+
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
-public class MainActivity extends ActionBarActivity {
 
+public class ListActivity extends ActionBarActivity implements OnClickListener {
+
+	//private ListView list;
+	//private ListAdapter adapter;
+
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+ 
+		ArrayList<String> valueList = new ArrayList<String>();
+		for (int i = 0; i < 100; i++)
+		{
+		valueList.add("Contact "+i);
 		}
+		
+		ListAdapter adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_item, valueList);
+		
+		final ListView lv = (ListView)findViewById(R.id.listView1);
+
+		lv.setAdapter(adapter);
 	}
 
 	@Override
@@ -60,5 +77,10 @@ public class MainActivity extends ActionBarActivity {
 			return rootView;
 		}
 	}
+	
+	@Override
+	public void onClick(View v) {
+	}
+	
 
 }
