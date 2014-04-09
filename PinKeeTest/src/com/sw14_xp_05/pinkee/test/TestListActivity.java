@@ -1,10 +1,9 @@
 package com.sw14_xp_05.pinkee.test;
 
-import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 
 import com.robotium.solo.Solo;
-import com.sw14_xp_05.pinkee.ChatActivity;
 import com.sw14_xp_05.pinkee.ListActivity;
 
 public class TestListActivity extends ActivityInstrumentationTestCase2<ListActivity> {
@@ -22,9 +21,9 @@ public class TestListActivity extends ActivityInstrumentationTestCase2<ListActiv
 		super.tearDown();
 	}
 	
-	public void testlickChatListElement() {
+	public void testClickChatListElement() {
 		mySolo.clickInList(0);
-		Activity chatActivity = mySolo.getCurrentActivity();
-		assertTrue("Chat window not open", chatActivity instanceof ChatActivity);
+		Log.e("chatTestLog","testytest");
+		mySolo.assertCurrentActivity("Chat window not open", ListActivity.class);
 	}
 }
