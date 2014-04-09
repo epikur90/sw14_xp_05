@@ -1,6 +1,8 @@
 package com.sw14_xp_05.pinkee;
 
 import java.util.ArrayList;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -8,34 +10,48 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import com.sw14_xp_05.pinkee.R;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+//import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 public class ListActivity extends ActionBarActivity implements OnClickListener {
 
-	//private ListView list;
-	//private ListAdapter adapter;
+	// private ListView list;
+	// private ListAdapter adapter;
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
- 
+		setContentView(R.layout.activity_list);
+
 		ArrayList<String> valueList = new ArrayList<String>();
-		for (int i = 0; i < 100; i++)
-		{
-		valueList.add("Contact "+i);
+		for (int i = 0; i < 100; i++) {
+			valueList.add("Contact " + i);
 		}
-		
-		ListAdapter adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_item, valueList);
-		
-		final ListView lv = (ListView)findViewById(R.id.listView1);
+
+		ListAdapter adapter = new ArrayAdapter<String>(getApplicationContext(),
+				R.layout.list_item, valueList);
+
+		final ListView lv = (ListView) findViewById(R.id.listView1);
+		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				
+				
+				System.out.println( view.getClass().getName() );
+				ChatActivity chatWindow = new ChatActivity();
+				Intent newActivity0 = new Intent(ListActivity.this, ChatActivity.class);     
+	            startActivity(newActivity0);
+				
+			}
+			
+		});
 
 		lv.setAdapter(adapter);
 	}
@@ -76,10 +92,11 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
 			return rootView;
 		}
 	}
-	
+
 	@Override
 	public void onClick(View v) {
+
+		
 	}
-	
 
 }

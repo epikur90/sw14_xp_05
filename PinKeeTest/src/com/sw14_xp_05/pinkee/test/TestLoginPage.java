@@ -1,7 +1,8 @@
 package com.sw14_xp_05.pinkee.test;
 
-import com.sw14_xp_05.pinkee.*;
+import com.sw14_xp_05.pinkee.LoginActivity;
 import com.robotium.solo.Solo;
+
 
 import android.test.ActivityInstrumentationTestCase2;
 
