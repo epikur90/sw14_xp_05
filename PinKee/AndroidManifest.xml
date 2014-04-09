@@ -35,6 +35,21 @@
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
+        
+        <provider
+		    android:name=".DataProvider"
+		    android:authorities="com.sw14_xp_05.provider"
+		    android:exported="false" >
+		</provider>
+        
+        <receiver
+        android:name=".client.GcmBroadcastReceiver"
+        android:permission="com.google.android.c2dm.permission.SEND" >
+        <intent-filter>
+            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            <category android:name="com.sw14_xp_05.pinkee" />
+        </intent-filter>
+    </receiver>
     </application>
 
 </manifest>
