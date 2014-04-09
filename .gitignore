@@ -13,3 +13,9 @@ google-play-services_lib/bin
 google-play-services_lib/gen
 google-play-services_lib/.classpath
 google-play-services_lib/project.properties
+
+PinKeeTest/.classpath
+PinKeeTest/bin
+PinKeeTest/gen
+PinKeeTest/project.properties
+
