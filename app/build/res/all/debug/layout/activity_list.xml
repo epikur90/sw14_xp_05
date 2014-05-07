@@ -11,4 +11,4 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
       </ListView>
-</RelativeLayout><!-- From: file:/home/michael/Dokumente/XP/workspace/sw14_xp_05/app/src/main/res/layout/activity_list.xml -->
+</RelativeLayout><!-- From: file:/home/andreas/AndroidStudioProjects/sw14_xp_05/app/src/main/res/layout/activity_list.xml -->

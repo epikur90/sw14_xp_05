@@ -23,4 +23,4 @@
     <include layout="@layout/abc_action_bar_decor_include" />
 
 </LinearLayout>
-<!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/klp-ub-dev/frameworks/support/v7/appcompat/res/layout/abc_action_bar_decor.xml --><!-- From: file:/home/michael/Dokumente/XP/workspace/sw14_xp_05/app/build/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/layout/abc_action_bar_decor.xml -->
+<!-- From: file:/Volumes/Android/int/klp-dev/frameworks/support/v7/appcompat/res/layout/abc_action_bar_decor.xml --><!-- From: file:/home/andreas/AndroidStudioProjects/sw14_xp_05/app/build/exploded-aar/com.android.support/appcompat-v7/19.0.1/res/layout/abc_action_bar_decor.xml -->
