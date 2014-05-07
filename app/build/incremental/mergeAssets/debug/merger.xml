@@ -2,13 +2,13 @@
 <merger>
 
     <dataSet config="19.1.0" >
-        <source path="/home/michael/Dokumente/XP/workspace/Pinkee/app/build/exploded-aar/com.android.support/appcompat-v7/19.1.0/assets" />
+        <source path="/home/michael/Dokumente/XP/workspace/sw14_xp_05/app/build/exploded-aar/com.android.support/appcompat-v7/19.1.0/assets" />
     </dataSet>
     <dataSet config="main" >
-        <source path="/home/michael/Dokumente/XP/workspace/Pinkee/app/src/main/assets" />
+        <source path="/home/michael/Dokumente/XP/workspace/sw14_xp_05/app/src/main/assets" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="/home/michael/Dokumente/XP/workspace/Pinkee/app/src/debug/assets" />
+        <source path="/home/michael/Dokumente/XP/workspace/sw14_xp_05/app/src/debug/assets" />
     </dataSet>
 
 </merger>

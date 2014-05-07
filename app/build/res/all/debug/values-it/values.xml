@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- From: file:/home/michael/Dokumente/XP/workspace/Pinkee/app/build/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/values-it/values.xml -->
+    <!-- From: file:/home/michael/Dokumente/XP/workspace/sw14_xp_05/app/build/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/values-it/values.xml -->
     <eat-comment />
 
     <string name="abc_action_bar_home_description" msgid="4600421777120114993">"Vai alla home page"</string>
@@ -17,7 +17,7 @@
     <string name="abc_searchview_description_voice" msgid="893419373245838918">"Ricerca vocale"</string>
     <string name="abc_shareactionprovider_share_with" msgid="3421042268587513524">"Condividi con"</string>
     <string name="abc_shareactionprovider_share_with_application" msgid="7165123711973476752">"Condividi con %s"</string>
-    <!-- From: file:/home/michael/Dokumente/XP/workspace/Pinkee/app/build/exploded-aar/com.google.android.gms/play-services/4.3.23/res/values-it/strings.xml -->
+    <!-- From: file:/home/michael/Dokumente/XP/workspace/sw14_xp_05/app/build/exploded-aar/com.google.android.gms/play-services/4.3.23/res/values-it/strings.xml -->
     <eat-comment />
 
     <string name="auth_client_needs_enabling_title" msgid="3983201110833868073">"Un\'applicazione richiede l\'attivazione di Google Play Services."</string>

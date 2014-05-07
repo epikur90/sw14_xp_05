@@ -26,4 +26,4 @@
 
     <include layout="@layout/abc_activity_chooser_view_include" />
 
-</LinearLayout><!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/klp-ub-dev/frameworks/support/v7/appcompat/res/layout-v14/abc_activity_chooser_view.xml --><!-- From: file:/home/michael/Dokumente/XP/workspace/Pinkee/app/build/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/layout-v14/abc_activity_chooser_view.xml -->
+</LinearLayout><!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/klp-ub-dev/frameworks/support/v7/appcompat/res/layout-v14/abc_activity_chooser_view.xml --><!-- From: file:/home/michael/Dokumente/XP/workspace/sw14_xp_05/app/build/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/layout-v14/abc_activity_chooser_view.xml -->
