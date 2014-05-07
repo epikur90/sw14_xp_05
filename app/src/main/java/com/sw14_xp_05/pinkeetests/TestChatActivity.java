@@ -24,10 +24,11 @@ public class TestChatActivity extends ActivityInstrumentationTestCase2<ChatActiv
 		solo.enterText(0,"so extreme!");
 		solo.getText("so extreme!");
 	}
-	
-	public void testSendButton() {
-		solo.enterText(0, "Hello world!");
-		solo.clickOnButton("Send");
-		//solo.
-	}
+
+    public void testSendButton() {
+        solo.enterText(0, "Hello nerd!");
+        solo.clickOnButton("Send");
+        assertTrue("EditText should be empty", solo.getEditText(0).getText().toString().isEmpty());
+        solo.getText("Hello nerd!");
+    }
 }

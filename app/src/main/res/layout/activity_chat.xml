@@ -7,24 +7,32 @@
     tools:ignore="MergeRootFrame" >
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/editText1"
+        android:layout_alignTop="@+id/textFieldMessage"
         android:text="Send" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/textFieldMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/button1"
+        android:layout_toLeftOf="@+id/buttonSend"
         android:ems="10" >
 
         <requestFocus />
     </EditText>
+
+    <com.sw14_xp_05.pinkee.MessageList
+        android:id="@+id/messageList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonSend"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>
