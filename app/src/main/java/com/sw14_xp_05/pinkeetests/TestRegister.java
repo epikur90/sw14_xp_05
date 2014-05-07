@@ -1,4 +1,4 @@
-package com.sw14_xp_05.pinkee.testpackage;
+package com.sw14_xp_05.pinkeetests;
 
 import android.test.ActivityInstrumentationTestCase2;
 

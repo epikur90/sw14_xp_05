@@ -1,4 +1,4 @@
-package com.sw14_xp_05.pinkee.testpackage;
+package com.sw14_xp_05.pinkeetests;
 
 import com.sw14_xp_05.pinkee.LoginActivity;
 import com.robotium.solo.Solo;
