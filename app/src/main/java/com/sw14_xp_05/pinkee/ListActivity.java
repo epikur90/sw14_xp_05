@@ -1,7 +1,7 @@
 package com.sw14_xp_05.pinkee;
 
-import java.util.ArrayList;
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,107 +14,147 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.AccountPicker;
-import com.sw14_xp_05.pinkee.ChatActivity;
-import com.sw14_xp_05.pinkee.Common;
-import com.sw14_xp_05.pinkee.R;
+
+import java.util.ArrayList;
 
 
 public class ListActivity extends ActionBarActivity implements OnClickListener {
 
-	// private ListView list;
-	// private ListAdapter adapter;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> list_items;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_list);
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_list);
-		
-		Common utils = new Common();
-		
-		
-		if(!utils.isLoggenIn())
-		{
-			Intent intent = AccountPicker.newChooseAccountIntent(null, null,
-					new String[] { "com.google" }, false, null, null, null, null);
-			startActivityForResult(intent, 2);		
-			
-			
-			
-			
-		}
-		
-		// Dummy contacts
-		ArrayList<String> valueList = new ArrayList<String>();
-		for (int i = 0; i < 100; i++) {
-			valueList.add("Contact " + i);
-		}
-		
-		ListAdapter adapter = new ArrayAdapter<String>(getApplicationContext(),
-				R.layout.list_item, valueList);
-		
-		final ListView lv = (ListView) findViewById(R.id.listView);
-		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        Common utils = new Common();
 
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-								
-				System.out.println( view.getClass().getName() );
-				ChatActivity chatWindow = new ChatActivity();
-				Intent newActivity0 = new Intent(ListActivity.this, ChatActivity.class);     
-	            startActivity(newActivity0);
-				
-			}
-			
-		});
 
-		lv.setAdapter(adapter);
-	}
+        if (!utils.isLoggenIn()) {
+            Intent intent = AccountPicker.newChooseAccountIntent(null, null,
+                    new String[]{"com.google"}, false, null, null, null, null);
+            startActivityForResult(intent, 2);
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
 
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+        }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+        // Dummy contacts
+        list_items = new ArrayList<String>();
+        for (int i = 0; i < 40; i++) {
+            list_items.add("Contact " + i);
+        }
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
+        adapter = new ArrayAdapter<String>(getApplicationContext(),
+                R.layout.list_item, list_items);
 
-		public PlaceholderFragment() {
-		}
+        final ListView lv = (ListView) findViewById(R.id.listView);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			return rootView;
-		}
-	}
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
 
-	@Override
-	public void onClick(View v) {
+                System.out.println(view.getClass().getName());
+                ChatActivity chatWindow = new ChatActivity();
+                Intent newActivity0 = new Intent(ListActivity.this, ChatActivity.class);
+                startActivity(newActivity0);
 
-		
-	}
+            }
+
+        });
+
+        lv.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == R.id.action_add_contact) {
+
+            // Set an EditText view to get user input
+            final EditText emailEditText = new EditText(this);
+
+            final AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setTitle(R.string.action_add_contact)
+                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton("Ok", null)
+                    .setMessage(R.string.action_add_contact_message)
+                    .setView(emailEditText)
+                    .create();
+            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+                @Override
+                public void onShow(DialogInterface arg0) {
+
+                    Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    okButton.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View arg0) {
+
+                            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailEditText.getText().toString()).matches()) {
+                                Toast.makeText(getBaseContext(), R.string.action_add_contact_invalid_email, Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                dialog.dismiss();
+                                list_items.add(emailEditText.getText().toString());
+                                adapter.notifyDataSetChanged();
+                            }
+
+                        }
+                    });
+                }
+            });
+            dialog.show();
+
+            //TODO
+
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+
+        public PlaceholderFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_main, container,
+                    false);
+            return rootView;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+
+    }
 }
