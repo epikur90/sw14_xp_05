@@ -3,26 +3,46 @@ package com.sw14_xp_05.pinkee;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class ChatActivity extends ActionBarActivity {
-	
+
+	private Button buttonSend;
+	private EditText textFieldMessage;
+	private MessageList messageList;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
+
+		this.buttonSend = (Button) this.findViewById(R.id.buttonSend);
+		this.textFieldMessage = (EditText) this.findViewById(R.id.textFieldMessage);
+		this.messageList = (MessageList) this.findViewById(R.id.messageList);
+		
+		
+		this.buttonSend.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				String message = textFieldMessage.getText().toString();
+				textFieldMessage.getText().clear();
+				messageList.displayMessage(message);
+				
+			}
+		});
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 	}
-
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
