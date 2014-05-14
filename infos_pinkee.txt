@@ -1,0 +1,35 @@
+//google account
+Email: pinkeeapp@gmail.com
+Passwort: pinkee2014
+
+//////////////////////////////////////////
+//PinKee - Project
+//////////////////////////////////////////
+Project name: PinKee
+Project ID: pinkee-app
+sender-ID/Project-ID/number: 668521465630   (as a username when connecting to Google's CCS)
+Client ID: 668521465630.apps.googleusercontent.com
+Email address: 668521465630@developer.gserviceaccount.com
+
+//Server-Key Pinkee 
+//(Server Key will only be used by your server application as a password when connecting to Google's CCS)
+API key: AIzaSyBaZlU3ujkXLcOxEQWsTX9olJB1V5XRmN0
+
+
+
+
+//Server
+Server: pinkee-server.appspot.com (74.125.23.141)
+website: http://1-dot-pinkee-app.appspot.com/
+identifier: pinkee-server
+
+
+
+
+
+
+//alt
+Google APIs Console Project Number: 175319109552
+Server: http://pinkee-serv.appspot.com
+API key: AIzaSyBEUxOHFA2Zm3e-0vgizpejDvjrfiWyg3M
+
