@@ -1,6 +1,8 @@
 package com.sw14_xp_05.pinkee;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,9 +20,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.google.android.gms.common.AccountPicker;
-import com.sw14_xp_05.pinkee.ChatActivity;
-import com.sw14_xp_05.pinkee.Common;
-import com.sw14_xp_05.pinkee.R;
 
 
 public class ListActivity extends ActionBarActivity implements OnClickListener {
@@ -40,21 +39,33 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
 		{
 			Intent intent = AccountPicker.newChooseAccountIntent(null, null,
 					new String[] { "com.google" }, false, null, null, null, null);
-			startActivityForResult(intent, 2);		
-			
-			
-			
-			
+			startActivityForResult(intent, 2);
 		}
+
+        Vector<String> names = new Vector<String>();
+        names.add("Hugo");
+        names.add("Hodor");
+        names.add("Eva");
+        names.add("Albrecht");
+        names.add("Klaus");
+        names.add("Susi");
+        names.add("Franz");
+        names.add("Gustav");
+        names.add("Mickey Mouse");
+        names.add("Veronika");
+        names.add("Nore Ply");
+
+
 		
 		// Dummy contacts
 		ArrayList<String> valueList = new ArrayList<String>();
-		for (int i = 0; i < 100; i++) {
-			valueList.add("Contact " + i);
+		for (int i = 0; i < 11; i++) {
+			valueList.add(names.elementAt(i));
 		}
 		
 		ListAdapter adapter = new ArrayAdapter<String>(getApplicationContext(),
-				R.layout.list_item, valueList);
+				R.layout.contact_list_item, valueList);
+
 		
 		final ListView lv = (ListView) findViewById(R.id.listView);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

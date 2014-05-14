@@ -10,9 +10,11 @@ import android.widget.ListView;
 
 public class MessageList extends ListView {
 	
-	private ArrayAdapter<String> listAdapter;
-	
-	public MessageList(Context context) {
+	//private ArrayAdapter<Message> listAdapter;
+    private ChatListAdapter listAdapter;
+
+
+    public MessageList(Context context) {
 		super(context);
 		init();
 
@@ -38,16 +40,16 @@ public class MessageList extends ListView {
 		setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 		setStackFromBottom(true);
 		Log.d("#messageList", "Message List created");
-		ArrayList<String> valueList = new ArrayList<String>();
+		ArrayList<Message> valueList = new ArrayList<Message>();
 
-		listAdapter = new ArrayAdapter<String>(getContext(),
-				R.layout.list_item, valueList);
-
+		listAdapter = new ChatListAdapter(getContext(), valueList);
+        setDivider(null);
+        setDividerHeight(0);
 		setAdapter(listAdapter);
 	}
 	
-	public void displayMessage(String message){
-        if (!message.isEmpty())
+	public void displayMessage(Message message){
+        if (!message.getMessageText().isEmpty())
 		    listAdapter.add(message);
 	}
 

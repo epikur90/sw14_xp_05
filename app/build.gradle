@@ -8,7 +8,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 19
 
-        testPackageName "com.sw14_xp_05.pinkee.test"
+        testPackageName "com.sw14_xp_05.pinkeetests"
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }
 

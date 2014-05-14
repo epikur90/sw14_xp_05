@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import java.util.Date;
 
 public class ChatActivity extends ActionBarActivity {
 
@@ -25,11 +26,14 @@ public class ChatActivity extends ActionBarActivity {
 		this.buttonSend = (Button) this.findViewById(R.id.buttonSend);
 		this.textFieldMessage = (EditText) this.findViewById(R.id.textFieldMessage);
 		this.messageList = (MessageList) this.findViewById(R.id.messageList);
-		
+
+        messageList.displayMessage(new Message("Hi Albi, meld dich!", "receiver@iwo.com", new Date(), new Date()));
+        messageList.displayMessage(new Message("Sers, bin online...", null, new Date(), new Date()));
 		
 		this.buttonSend.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				String message = textFieldMessage.getText().toString();
+				Message message = new Message(textFieldMessage.getText().toString());
+
 				textFieldMessage.getText().clear();
 				messageList.displayMessage(message);
 				
@@ -63,9 +67,13 @@ public class ChatActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
+    public MessageList getMessageList(){
+        return messageList;
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
 	public static class PlaceholderFragment extends Fragment {
 
 		public PlaceholderFragment() {
@@ -79,5 +87,4 @@ public class ChatActivity extends ActionBarActivity {
 			return rootView;
 		}
 	}
-
 }

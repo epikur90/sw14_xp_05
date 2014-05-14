@@ -65,7 +65,7 @@ public class RegisterActivity extends ActionBarActivity {
         mDisplay = (TextView) findViewById(R.id.display);
 
         context = getApplicationContext();
-        
+
         // Check device for Play Services APK. If check succeeds, proceed with
         //  GCM registration.
         //if (checkPlayServices()) {
