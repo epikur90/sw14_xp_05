@@ -18,10 +18,11 @@ public class TestLoginPage extends ActivityInstrumentationTestCase2<LoginActivit
 		mySolo = new Solo(getInstrumentation(), getActivity());
 	}
 	
-	protected void tearDown() throws Exception {
+	protected void tearDown()
+            throws Exception {
 		super.tearDown();
 	}
-	public void testClickAllElements() {
+	/*public void testClickAllElements() {
 		mySolo.clickOnCheckBox(0);
 		mySolo.clickOnButton("login");
 	}
@@ -32,5 +33,5 @@ public class TestLoginPage extends ActivityInstrumentationTestCase2<LoginActivit
 		mySolo.getText("michi@gmail.com");
 		mySolo.enterText(1, "123456");
 		mySolo.getText("123456");
-	}
+	}*/
 }
