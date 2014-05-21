@@ -1,18 +1,21 @@
 package com.sw14_xp_05.pinkee;
 
-import android.widget.ImageButton;
-
 import java.util.Date;
 
 public class Message {
     private String messageText;
-    private String senderEmail;
+    private Contact contact;
     private Date dateSent;
     private Date dateReceived;
 
-    public Message(String messageText, String senderEmail, Date dateSent, Date dateReceived){
+    public static final String DB_COL_ID = "id";
+    public static final String DB_COL_MESSAGETEXT = "messageText";
+    public static final String DB_COL_CONTACT = "contact";
+    public static final String DB_COL_DATE = "date";
+
+    public Message(String messageText, Contact contact, Date dateSent, Date dateReceived) {
         this.messageText = messageText;
-        this.senderEmail = senderEmail;
+        this.contact = contact;
         this.dateSent = dateSent;
         this.dateReceived = dateReceived;
     }
@@ -29,12 +32,16 @@ public class Message {
         this.messageText = messageText;
     }
 
-    public String getSenderEmail() {
-        return senderEmail;
+    public Contact getContact() {
+        return contact;
     }
 
-    public void setSenderEmail(String senderEmail) {
-        this.senderEmail = senderEmail;
+    public String getContactID() {
+        return "email placeholder";
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
     }
 
     public Date getDateSent() {
@@ -58,6 +65,6 @@ public class Message {
     }
 
     public boolean isIncoming() {
-        return senderEmail != null;
+        return contact != null;
     }
 }
