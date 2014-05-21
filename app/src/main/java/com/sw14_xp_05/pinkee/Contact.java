@@ -5,22 +5,25 @@ package com.sw14_xp_05.pinkee;
  */
 public class Contact {
 
-    private String id;
     private String forename;
     private String name;
     private String email;
     private String picture_link;
 
+    public static final String DB_TABLE = "contact";
+    public static final String DB_COL_EMAIL = "email";
+    public static final String DB_COL_FORENAME = "forename";
+    public static final String DB_COL_NAME = "name";
+    public static final String DB_COL_PICTURE = "picture";
+
     public Contact() {
-        this.id = "";
         this.forename = "";
         this.name = "";
         this.email = "";
         this.picture_link = "";
     }
 
-    public Contact(String id, String forename, String name, String email, String picture_link) {
-        this.id = id;
+    public Contact(String forename, String name, String email, String picture_link) {
         this.forename = forename;
         this.name = name;
         this.email = email;
@@ -30,14 +33,6 @@ public class Contact {
 
     public String getFullName() {
         return forename + " " + name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getForename() {
