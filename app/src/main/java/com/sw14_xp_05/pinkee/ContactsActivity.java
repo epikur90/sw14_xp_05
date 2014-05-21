@@ -72,7 +72,7 @@ public class ContactsActivity extends ActionBarActivity implements OnClickListen
 
                 System.out.println(view.getClass().getName());
                 ChatActivity chatWindow = new ChatActivity();
-                Intent newActivity0 = new Intent(ListActivity.this, ChatActivity.class);
+                Intent newActivity0 = new Intent(ContactsActivity.this, ChatActivity.class);
                 startActivity(newActivity0);
 
             }

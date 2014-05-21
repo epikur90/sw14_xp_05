@@ -66,10 +66,6 @@
             android:label="@string/title_activity_chat" >
         </activity>
         <activity
-            android:name="com.sw14_xp_05.pinkee.MainActivity"
-            android:label="@string/title_activity_main" >
-        </activity>
-        <activity
             android:name="com.sw14_xp_05.pinkee.ProfileActivity"
             android:label="@string/title_activity_profile" >
         </activity>
