@@ -13,5 +13,8 @@
     <string name="action_add_contact">Add Contact</string>
     <string name="action_add_contact_message">Please enter a valid email address:</string>
     <string name="action_add_contact_invalid_email">This is not valid email address</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="show_contacts">Contacts</string>
+    <string name="title_activity_contacts">ContactsActivity</string>
 
 </resources>
