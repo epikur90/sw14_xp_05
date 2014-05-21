@@ -21,6 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.util.Log;
+
 
 import com.google.android.gms.common.AccountPicker;
 
@@ -85,6 +87,7 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
 
     });
 
+
     lv.setAdapter(adapter);
   }
 
@@ -107,47 +110,54 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
     }
     if (id == R.id.action_add_contact) {
 
-      // Set an EditText view to get user input
-      final EditText emailEditText = new EditText(this);
+          // Set an EditText view to get user input
+          final EditText emailEditText = new EditText(this);
 
-      final AlertDialog dialog = new AlertDialog.Builder(this)
-      .setTitle(R.string.action_add_contact)
-      .setNegativeButton("Cancel", null)
-      .setPositiveButton("Ok", null)
-      .setMessage(R.string.action_add_contact_message)
-      .setView(emailEditText)
-      .create();
-      dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+          final AlertDialog dialog = new AlertDialog.Builder(this)
+                  .setTitle(R.string.action_add_contact)
+                  .setNegativeButton("Cancel", null)
+                  .setPositiveButton("Ok", null)
+                  .setMessage(R.string.action_add_contact_message)
+                  .setView(emailEditText)
+                  .create();
+          dialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
-        @Override
-        public void onShow(DialogInterface arg0) {
+              @Override
+              public void onShow(DialogInterface arg0) {
 
-          Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-          okButton.setOnClickListener(new View.OnClickListener() {
+                  Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                  okButton.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View arg0) {
+                      @Override
+                      public void onClick(View arg0) {
 
-              if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailEditText.getText().toString()).matches()) {
-                Toast.makeText(getBaseContext(), R.string.action_add_contact_invalid_email, Toast.LENGTH_LONG).show();
+                          if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailEditText.getText().toString()).matches()) {
+                              Toast.makeText(getBaseContext(), R.string.action_add_contact_invalid_email, Toast.LENGTH_LONG).show();
+                          }
+                          else{
+                              dialog.dismiss();
+                              valueList.add(emailEditText.getText().toString());
+                              adapter.notifyDataSetChanged();
+                          }
+
+                      }
+                  });
               }
-              else{
-                dialog.dismiss();
-                valueList.add(emailEditText.getText().toString());
-                adapter.notifyDataSetChanged();
-              }
-
-            }
           });
-        }
-      });
-      dialog.show();
+          dialog.show();
 
-      //TODO
+          //TODO
 
 
-      return true;
-    }
+          return true;
+      }
+      if (id == R.id.action_show_contacts) {
+          Log.i("ListActivity", "action_show_contacts clicked");
+          Intent new_activity_contacts = new Intent(this, ContactsActivity.class);
+          startActivity(new_activity_contacts);
+          return true;
+      }
+
     return super.onOptionsItemSelected(item);
   }
 
