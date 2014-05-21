@@ -12,7 +12,8 @@ public class MessageList extends ListView {
 	
 	//private ArrayAdapter<Message> listAdapter;
     private ChatListAdapter listAdapter;
-
+    private SQLiteStorageHelper dbhelper;
+    private Contact contact;
 
     public MessageList(Context context) {
 		super(context);
@@ -20,14 +21,15 @@ public class MessageList extends ListView {
 
 	}
 
-	public MessageList(ListView listView) {
+	public MessageList(ListView listView, Contact contact) {
 		this(listView.getContext());
+        this.contact = contact;
 	}
 
 	public MessageList(Context context, AttributeSet attrSet) {
 		super(context, attrSet);
-		init();
-
+        contact = new Contact();
+        init();
 	}
 
 	public MessageList(Context context, AttributeSet attrSet, int defStyle) {
@@ -36,11 +38,12 @@ public class MessageList extends ListView {
 	}
 
 	public void init() {
-		
-		setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+        dbhelper = new SQLiteStorageHelper(this.getContext());
+
+        setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 		setStackFromBottom(true);
 		Log.d("#messageList", "Message List created");
-		ArrayList<Message> valueList = new ArrayList<Message>();
+		ArrayList<Message> valueList = dbhelper.getMessages(contact);
 
 		listAdapter = new ChatListAdapter(getContext(), valueList);
         setDivider(null);
@@ -49,8 +52,19 @@ public class MessageList extends ListView {
 	}
 	
 	public void displayMessage(Message message){
-        if (!message.getMessageText().isEmpty())
-		    listAdapter.add(message);
+        if (message.getMessageText().isEmpty()) return;
+
+        dbhelper.saveMessage(message);
+        listAdapter.add(message);
+
 	}
 
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+        listAdapter.notifyDataSetChanged();
+    }
 }

@@ -5,24 +5,25 @@ import java.util.Date;
 public class Message {
     private String messageText;
     private Contact contact;
-    private Date dateSent;
-    private Date dateReceived;
+    private Date date;
 
+    public static final String DB_TABLE = "message";
     public static final String DB_COL_ID = "id";
     public static final String DB_COL_MESSAGETEXT = "messageText";
     public static final String DB_COL_CONTACT = "contact";
     public static final String DB_COL_DATE = "date";
 
-    public Message(String messageText, Contact contact, Date dateSent, Date dateReceived) {
+    public Message(String messageText, Contact contact, Date date) {
         this.messageText = messageText;
         this.contact = contact;
-        this.dateSent = dateSent;
-        this.dateReceived = dateReceived;
+        this.date = date;
     }
 
-    public Message(String messageText){
-        this(messageText, null, new Date(), null);
+    public Message(String messageText, Contact contact){
+        this(messageText, contact, new Date());
     }
+
+    public Message(){this("", null,null);}
 
     public String getMessageText() {
         return messageText;
@@ -37,27 +38,19 @@ public class Message {
     }
 
     public String getContactID() {
-        return "email placeholder";
+        return contact.getEmail();
     }
 
     public void setContact(Contact contact) {
         this.contact = contact;
     }
 
-    public Date getDateSent() {
-        return dateSent;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDateSent(Date dateSent) {
-        this.dateSent = dateSent;
-    }
-
-    public Date getDateReceived() {
-        return dateReceived;
-    }
-
-    public void setDateReceived(Date dateReceived) {
-        this.dateReceived = dateReceived;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String toString() {

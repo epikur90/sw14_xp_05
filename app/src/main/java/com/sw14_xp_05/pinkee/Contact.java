@@ -17,10 +17,10 @@ public class Contact {
     public static final String DB_COL_PICTURE = "picture";
 
     public Contact() {
-        this.forename = "";
-        this.name = "";
-        this.email = "";
-        this.picture_link = "";
+        this.forename = "john";
+        this.name = "doe";
+        this.email = "john.doe@yourmama.com";
+        this.picture_link = "johndoecontactimage";
     }
 
     public Contact(String forename, String name, String email, String picture_link) {

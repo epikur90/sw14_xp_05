@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import java.util.Date;
+import android.util.Log;
 
 public class ChatActivity extends ActionBarActivity {
 
 	private Button buttonSend;
 	private EditText textFieldMessage;
 	private MessageList messageList;
+    private Contact contact;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +29,12 @@ public class ChatActivity extends ActionBarActivity {
 		this.textFieldMessage = (EditText) this.findViewById(R.id.textFieldMessage);
 		this.messageList = (MessageList) this.findViewById(R.id.messageList);
 
-        messageList.displayMessage(new Message("Hi Albi, meld dich!", "receiver@iwo.com", new Date(), new Date()));
-        messageList.displayMessage(new Message("Sers, bin online...", null, new Date(), new Date()));
+        contact = new Contact();
+        messageList.setContact(contact);
 		
 		this.buttonSend.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Message message = new Message(textFieldMessage.getText().toString());
+				Message message = new Message(textFieldMessage.getText().toString(), contact);
 
 				textFieldMessage.getText().clear();
 				messageList.displayMessage(message);
