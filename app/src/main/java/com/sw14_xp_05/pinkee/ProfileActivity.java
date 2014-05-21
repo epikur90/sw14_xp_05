@@ -18,8 +18,7 @@ public class ProfileActivity extends ActionBarActivity {
         setContentView(R.layout.activity_profile);
 
         ///TODO: get contact from server
-        contact = new Contact("iddddd", "Michael", "Scheucher", "michischeucher@gmail.com", "bildresource");
-
+        contact = new Contact("Michael", "Scheucher", "michischeucher@gmail.com", "bildresource");
 
         TextView forename_view = (TextView) findViewById(R.id.forenameView);
         forename_view.setText(contact.getForename());
