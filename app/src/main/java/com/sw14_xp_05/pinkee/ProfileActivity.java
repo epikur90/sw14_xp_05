@@ -30,8 +30,8 @@ public class ProfileActivity extends ActionBarActivity {
         contact = new Contact("Michael", "Scheucher", "michischeucher@gmail.com", "bildresource");
 
 
-        TextView forename_view = (TextView) findViewById(R.id.forenameView);
-        forename_view.setText(contact.getForename());
+        //TextView forename_view = (TextView) findViewById(R.id.forenameView);
+        //forename_view.setText(contact.getForename());
 
         forename = (EditText) findViewById(R.id.editForename);
         forename.setText(contact.getForename());
