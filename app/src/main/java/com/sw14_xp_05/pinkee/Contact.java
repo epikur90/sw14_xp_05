@@ -11,6 +11,23 @@ public class Contact {
     private String email;
     private String picture_link;
 
+    public Contact() {
+        this.id = "";
+        this.forename = "";
+        this.name = "";
+        this.email = "";
+        this.picture_link = "";
+    }
+
+    public Contact(String id, String forename, String name, String email, String picture_link) {
+        this.id = id;
+        this.forename = forename;
+        this.name = name;
+        this.email = email;
+        this.picture_link = picture_link;
+    }
+
+
     public String getFullName() {
         return forename + " " + name;
     }

@@ -35,18 +35,16 @@ public class ContactsActivity extends ActionBarActivity implements OnClickListen
     private ArrayList<String> valueList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("ContactsActivity", "onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_contacts);
 
         Common utils = new Common();
-
 
         if (!utils.isLoggenIn()) {
             Intent intent = AccountPicker.newChooseAccountIntent(null, null,
                     new String[]{"com.google"}, false, null, null, null, null);
             startActivityForResult(intent, 2);
-
-
         }
 
         Vector<String> names = new Vector<String>();
@@ -56,24 +54,23 @@ public class ContactsActivity extends ActionBarActivity implements OnClickListen
 
         // Dummy contacts
         ArrayList<String> valueList = new ArrayList<String>();
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < names.size(); i++) {
             valueList.add(names.elementAt(i));
         }
 
+        Log.i("ContactsActivity", "vor adapter creation");
         adapter = new ArrayAdapter<String>(getApplicationContext(),
                 R.layout.contact_list_item, valueList);
 
-        final ListView lv = (ListView) findViewById(R.id.listView);
+        final ListView lv = (ListView) findViewById(R.id.contactsView);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-
                 System.out.println(view.getClass().getName());
-                ChatActivity chatWindow = new ChatActivity();
-                Intent newActivity0 = new Intent(ContactsActivity.this, ChatActivity.class);
-                startActivity(newActivity0);
+                Intent new_activity_profile = new Intent(ContactsActivity.this, ProfileActivity.class);
+                startActivity(new_activity_profile);
 
             }
 
@@ -86,7 +83,7 @@ public class ContactsActivity extends ActionBarActivity implements OnClickListen
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.list, menu);
+        getMenuInflater().inflate(R.menu.chat, menu);
         return true;
     }
 

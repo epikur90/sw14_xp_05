@@ -87,6 +87,7 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
 
     });
 
+
     lv.setAdapter(adapter);
   }
 
@@ -152,8 +153,8 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
       }
       if (id == R.id.action_show_contacts) {
           Log.i("ListActivity", "action_show_contacts clicked");
-          setContentView(R.layout.activity_contacts);
-
+          Intent new_activity_contacts = new Intent(this, ContactsActivity.class);
+          startActivity(new_activity_contacts);
           return true;
       }
 
