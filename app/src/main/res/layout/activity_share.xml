@@ -9,28 +9,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="E-Mail"
+        android:text="E-Mail:"
         android:id="@+id/Email"
-        android:textSize="24dp" />
+        android:textSize="24dp"
+        android:paddingLeft="70dp"
+        android:paddingTop="5dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/textviewshape" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/editEmail" />
+        android:id="@+id/editEmail"
+        android:layout_margin="5dp"
+        android:background="#e6e6e6"
+        android:layout_gravity="center_horizontal" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/Body"
         android:layout_weight="0.40"
-        android:text="Probiert diese coole APP namens PinKee mal aus ;)" />
+        android:text="Probiert diese coole APP namens PinKee mal aus ;)"
+        android:background="#e6e6e6" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Send"
         android:id="@+id/ButtonSend"
+        android:background="@drawable/buttonshape"
+        android:layout_margin="5dp"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

@@ -14,10 +14,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonBlue"
             android:layout_weight="0.04"
-            android:background="#ff1c49ff"
-            android:text="blue"
-            android:textColor="#ff1c49ff"
-            android:visibility="visible"/>
+            android:background="#ff1c49ff"/>
     </TableRow>
 
     <TableRow
@@ -29,9 +26,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonLightBlue"
             android:layout_weight="0.04"
-            android:background="#1dd2ff"
-            android:text="lightblue"
-            android:textColor="#1dd2ff"/>
+            android:background="#1dd2ff"/>
     </TableRow>
 
     <TableRow
@@ -43,9 +38,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonWhite"
             android:layout_weight="0.04"
-            android:background="#ffffff"
-            android:text="white"
-            android:textColor="#ffffff"/>
+            android:background="#ffffff"/>
     </TableRow>
 
     <TableRow
@@ -57,9 +50,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonRed"
             android:layout_weight="0.06"
-            android:background="#ff1c49"
-            android:text="red"
-            android:textColor="#ff1c49"/>
+            android:background="#ff1c49"/>
     </TableRow>
 
     <TableRow
@@ -71,9 +62,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonYellow"
             android:layout_weight="0.06"
-            android:background="#fffc49"
-            android:text="yellow"
-            android:textColor="#fffc49"/>
+            android:background="#fffc49"/>
     </TableRow>
 
     <TableRow
@@ -85,9 +74,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonLightGreen"
             android:layout_weight="0.04"
-            android:background="#55ff5c"
-            android:text="lightgreen"
-            android:textColor="#55ff5c"/>
+            android:background="#55ff5c"/>
     </TableRow>
 
     <TableRow
@@ -99,9 +86,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonGreen"
             android:layout_weight="0.04"
-            android:background="#19aa07"
-            android:text="green"
-            android:textColor="#19aa07"/>
+            android:background="#19aa07"/>
     </TableRow>
 
     <TableRow
@@ -113,9 +98,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonOrange"
             android:layout_weight="0.04"
-            android:background="#ff6a31"
-            android:text="orange"
-            android:textColor="#ff6a31"/>
+            android:background="#ff6a31"/>
     </TableRow>
 
     <TableRow
@@ -127,9 +110,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonPink"
             android:layout_weight="0.04"
-            android:background="#ff1fe9"
-            android:text="pink"
-            android:textColor="#ff1fe9"/>
+            android:background="#ff1fe9"/>
     </TableRow>
 
     <TableRow
@@ -141,9 +122,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonPurple"
             android:layout_weight="0.04"
-            android:background="#b166ff"
-            android:text="purple"
-            android:textColor="#b166ff"/>
+            android:background="#b166ff"/>
     </TableRow>
 
 </TableLayout>

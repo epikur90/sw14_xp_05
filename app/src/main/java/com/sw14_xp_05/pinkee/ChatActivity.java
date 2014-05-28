@@ -1,11 +1,18 @@
 package com.sw14_xp_05.pinkee;
 
+import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,8 +20,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import java.util.Date;
-import android.util.Log;
+import android.widget.Toast;
+
+import com.sw14_xp_05.gcm.DataProvider;
+import com.sw14_xp_05.gcm.GcmUtil;
+import com.sw14_xp_05.gcm.ServerUtilities;
+
+import java.io.IOException;
 
 public class ChatActivity extends ActionBarActivity {
 
@@ -22,6 +34,7 @@ public class ChatActivity extends ActionBarActivity {
 	private EditText textFieldMessage;
 	private MessageList messageList;
     private Contact contact;
+    private GcmUtil gcmUtil;
 
     public static final String MyPreferences = "MyPrefs";
     public static final String Mycolor = "Mycolor";
@@ -47,6 +60,9 @@ public class ChatActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				Message message = new Message(textFieldMessage.getText().toString(), contact);
 
+                // Send message to the server
+                send(textFieldMessage.getText().toString());
+
 				textFieldMessage.getText().clear();
 				messageList.displayMessage(message);
 				
@@ -57,8 +73,42 @@ public class ChatActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+
+        registerReceiver(registrationStatusReceiver, new IntentFilter(Common.ACTION_REGISTER));
+        gcmUtil = new GcmUtil(getApplicationContext());
 	}
-	
+
+    private void send(final String txt) {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg = "";
+                try {
+                    String targetEmail = contact.getEmail();
+                    ServerUtilities.send(txt, targetEmail);
+                    Log.d("ChatActivity", "Sending message to: " + targetEmail);
+                    ContentValues values = new ContentValues(2);
+                    values.put(DataProvider.COL_TYPE,  DataProvider.MessageType.OUTGOING.ordinal());
+                    values.put(DataProvider.COL_MESSAGE, txt);
+                    values.put(DataProvider.COL_RECEIVER_EMAIL, targetEmail);
+                    values.put(DataProvider.COL_SENDER_EMAIL, Common.getPreferredEmail());
+                    getContentResolver().insert(DataProvider.CONTENT_URI_MESSAGES, values);
+                    Log.d("ChatActivity", "Message was send: " + txt);
+                } catch (IOException ex) {
+                    msg = "Message could not be sent";
+                    Log.e("ChatActivity", msg);
+                }
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                if (!TextUtils.isEmpty(msg)) {
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                }
+            }
+        }.execute(null, null, null);
+    }
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,7 +174,23 @@ public class ChatActivity extends ActionBarActivity {
 
             background.setBackgroundResource(Themechange);
         }
-
-
     }
+
+    private BroadcastReceiver registrationStatusReceiver = new  BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null && Common.ACTION_REGISTER.equals(intent.getAction())) {
+                switch (intent.getIntExtra(Common.EXTRA_STATUS, 100)) {
+                    case Common.STATUS_SUCCESS:
+                        getSupportActionBar().setSubtitle("online");
+                        buttonSend.setEnabled(true);
+                        break;
+
+                    case Common.STATUS_FAILED:
+                        getSupportActionBar().setSubtitle("offline");
+                        break;
+                }
+            }
+        }
+    };
 }

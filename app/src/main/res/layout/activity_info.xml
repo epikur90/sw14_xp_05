@@ -16,14 +16,18 @@
         android:layout_weight="0.12" />
 
     <TextView
-        android:layout_width="88dp"
+        android:layout_width="123dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="PinKee"
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal"
         android:textSize="25dp"
-        android:textIsSelectable="true" />
+        android:textIsSelectable="false"
+        android:background="@drawable/textviewshape"
+        android:paddingLeft="25dp"
+        android:paddingTop="7dp"
+        android:layout_margin="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,5 +36,9 @@
         android:text="Version 0.5"
         android:id="@+id/textView2"
         android:layout_gravity="center_horizontal"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:background="@drawable/textviewshape"
+        android:paddingLeft="50dp"
+        android:paddingTop="7dp"
+        android:layout_margin="5dp"/>
 </LinearLayout>
