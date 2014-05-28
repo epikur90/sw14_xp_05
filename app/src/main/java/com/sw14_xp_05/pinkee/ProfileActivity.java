@@ -27,6 +27,10 @@ public class ProfileActivity extends ActionBarActivity {
         ///TODO: get contact from database, with id, which must be given from click on contact list item
         contact = new Contact("Michael", "Scheucher", "michischeucher@gmail.com", "bildresource");
 
+
+        //TextView forename_view = (TextView) findViewById(R.id.forenameView);
+        //forename_view.setText(contact.getForename());
+
         forename = (EditText) findViewById(R.id.editForename);
         forename.setText(contact.getForename());
         name = (EditText) findViewById(R.id.editName);
