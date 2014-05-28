@@ -42,13 +42,9 @@ public class MessageList extends ListView {
 
         setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 		setStackFromBottom(true);
-		Log.d("#messageList", "Message List created");
-		ArrayList<Message> valueList = dbhelper.getMessages(contact);
 
-		listAdapter = new ChatListAdapter(getContext(), valueList);
         setDivider(null);
         setDividerHeight(0);
-		setAdapter(listAdapter);
 	}
 	
 	public void displayMessage(Message message){
@@ -65,6 +61,13 @@ public class MessageList extends ListView {
 
     public void setContact(Contact contact) {
         this.contact = contact;
-        listAdapter.notifyDataSetChanged();
+        //listAdapter.notifyDataSetChanged();
+    }
+
+    public void initAdapter(){
+        ArrayList<Message> valueList = dbhelper.getMessages(contact);
+
+        listAdapter = new ChatListAdapter(getContext(), valueList);
+        setAdapter(listAdapter);
     }
 }

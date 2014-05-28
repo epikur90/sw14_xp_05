@@ -31,8 +31,10 @@ import java.util.ArrayList;
 
 public class ListActivity extends ActionBarActivity implements OnClickListener {
 
-  private ArrayAdapter<String> adapter;
-  private ArrayList<String> valueList;
+  private ContactListAdapter adapter;
+  private ArrayList<Contact> valueList;
+  private SQLiteStorageHelper dbhelper;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -40,36 +42,34 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
 
     Common utils = new Common();
 
-
+/*
     if (!utils.isLoggenIn()) {
       Intent intent = AccountPicker.newChooseAccountIntent(null, null,
                                                            new String[]{"com.google"}, false, null, null, null, null);
       startActivityForResult(intent, 2);
 
 
-    }
+    }*/
 
-    Vector<String> names = new Vector<String>();
-    names.add("Hugo");
-    names.add("Hodor");
-    names.add("Eva");
-    names.add("Albrecht");
-    names.add("Klaus");
-    names.add("Susi");
-    names.add("Franz");
-    names.add("Gustav");
-    names.add("Mickey Mouse");
-    names.add("Veronika");
-    names.add("Nore Ply");
+    dbhelper = new SQLiteStorageHelper(this.getBaseContext());
 
-		// Dummy contacts
-		ArrayList<String> valueList = new ArrayList<String>();
-		for (int i = 0; i < 11; i++) {
-			valueList.add(names.elementAt(i));
-		}
+    Contact c1 = new Contact();
+    Contact c2 = new Contact("Hugo","Hodor","hugoh@yourmama.com","link1");
+    Contact c3 = new Contact("Heinzi","Wieauchimmer","heinzw@yourmama.com","link2");
+    Contact c4 = new Contact("Eva","Kuier","evakuier@yourmama.com","link3");
+    Contact c5 = new Contact("Susi","Strolch","susi@yourmama.com","link4");
+    Contact c6 = new Contact("Mickey","Mouse","mmickey@yourmama.com","link5");
 
-    adapter = new ArrayAdapter<String>(getApplicationContext(),
-                                       R.layout.contact_list_item, valueList);
+    dbhelper.saveContact(c1);
+    dbhelper.saveContact(c2);
+    dbhelper.saveContact(c3);
+    dbhelper.saveContact(c4);
+    dbhelper.saveContact(c5);
+    dbhelper.saveContact(c6);
+
+    valueList = dbhelper.getContacts();
+
+    adapter = new ContactListAdapter(getApplicationContext(), valueList);
 
     final ListView lv = (ListView) findViewById(R.id.listView);
     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -79,14 +79,12 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
                               int position, long id) {
 
         System.out.println(view.getClass().getName());
-        ChatActivity chatWindow = new ChatActivity();
         Intent newActivity0 = new Intent(ListActivity.this, ChatActivity.class);
+        newActivity0.putExtra("contact", adapter.getItem(position));
         startActivity(newActivity0);
-
       }
 
     });
-
 
     lv.setAdapter(adapter);
   }
@@ -136,7 +134,8 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
                           }
                           else{
                               dialog.dismiss();
-                              valueList.add(emailEditText.getText().toString());
+                              //valueList.add(emailEditText.getText().toString());
+                              dbhelper.saveContact(new Contact("", "", emailEditText.getText().toString(), ""));
                               adapter.notifyDataSetChanged();
                           }
 

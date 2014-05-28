@@ -72,7 +72,6 @@ public class ChatListAdapter extends BaseAdapter {
     public void add(Message message) {
         searchArrayList.add(message);
         notifyDataSetChanged();
-
     }
 
     private static class ViewHolder {

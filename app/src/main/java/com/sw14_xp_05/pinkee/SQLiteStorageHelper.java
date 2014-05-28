@@ -58,17 +58,25 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
 
     public boolean saveMessage(Message message){
         Log.d("messages", "saving message..." + message.getMessageText());
-        final String table = "message";
         SQLiteDatabase db = this.getWritableDatabase();
+        if (db == null) {
+            Log.d("error", "saveMessage error fetching db");
+            return false;
+        }
+
         ContentValues values = new ContentValues();
         values.put(Message.DB_COL_MESSAGETEXT, message.getMessageText());
         values.put(Message.DB_COL_CONTACT, message.getContactID());
         values.put(Message.DB_COL_DATE, message.getDate().getTime());
 
-        db.insert(table, null, values);
+        long result = db.insert(Message.DB_TABLE, null, values);
         db.close();
 
-        return true;
+        if (result == -1){
+            Log.d("error", "saveMessage insertion failed");
+            return false;
+        } else
+            return true;
     }
 
     public ArrayList<Message> getMessages(Contact contact){
@@ -76,17 +84,18 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
 
         if(contact == null) return new ArrayList<Message>();
            Log.d("contact", "get messages, c not null");
+
+        Log.d("contact", contact.getEmail());
         SQLiteDatabase db = this.getReadableDatabase();
         String selection = Message.DB_COL_CONTACT + " = ?";
         String[] selectionArgs = new String[] {contact.getEmail()};
         Cursor cursor = db.query(Message.DB_TABLE, null, selection, selectionArgs, null, null, Message.DB_COL_DATE, null);
-        //Cursor cursor = db.query(Message.DB_TABLE, null, null, null, null, null, null, null);
 
         ArrayList<Message> result = new ArrayList<Message>();
 
         while (cursor.moveToNext()){
-            Log.d("messages", "message found");
             Message message = new Message();
+            Log.d("messages", "message found");
             message.setMessageText(cursor.getString(cursor.getColumnIndexOrThrow(Message.DB_COL_MESSAGETEXT)));
             message.setContact( contact );
             Date date = new Date(cursor.getLong(cursor.getColumnIndexOrThrow(Message.DB_COL_DATE)));
@@ -97,5 +106,45 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
         db.close();
 
         return result;
+    }
+
+    public boolean saveContact(Contact contact){
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (db == null) {
+            Log.d("error", "saveContact error fetching db");
+            return false;
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(Contact.DB_COL_FORENAME, contact.getForename());
+        values.put(Contact.DB_COL_NAME, contact.getName());
+        values.put(Contact.DB_COL_EMAIL, contact.getEmail());
+        values.put(Contact.DB_COL_PICTURE, contact.getPicture_link());
+
+        long result = db.insert(Contact.DB_TABLE, null, values);
+        db.close();
+
+      if (result == -1){
+          Log.d("error", "saveContact insertion failed");
+          return false;
+      } else
+          return true;
+    }
+
+    public ArrayList<Contact> getContacts(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * from " + Contact.DB_TABLE, null);
+
+        ArrayList<Contact> contacts = new ArrayList<Contact>();
+        while (cursor.moveToNext()){
+            Contact contact = new Contact();
+            contact.setForename( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_FORENAME )));
+            contact.setName( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_NAME )));
+            contact.setEmail( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_EMAIL )));
+            contact.setPicture_link( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_PICTURE )));
+            contacts.add(contact);
+        }
+        cursor.close();
+        return contacts;
     }
 }

@@ -29,9 +29,13 @@ public class ChatActivity extends ActionBarActivity {
 		this.textFieldMessage = (EditText) this.findViewById(R.id.textFieldMessage);
 		this.messageList = (MessageList) this.findViewById(R.id.messageList);
 
-        contact = new Contact();
-        messageList.setContact(contact);
-		
+        this.contact =  (Contact) getIntent().getSerializableExtra("contact");
+        Log.d("chatactivity", contact.getEmail());
+
+        this.messageList.setContact(this.contact);
+        this.messageList.initAdapter();
+        Log.d("chatactivity", this.messageList.getContact().getEmail());
+
 		this.buttonSend.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Message message = new Message(textFieldMessage.getText().toString(), contact);

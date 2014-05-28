@@ -39,7 +39,6 @@ public class ProfileActivity extends ActionBarActivity {
         name.setText(contact.getName());
         email = (TextView) findViewById(R.id.emailView);
         email.setText(contact.getEmail());
-
     }
 
 
@@ -51,7 +50,7 @@ public class ProfileActivity extends ActionBarActivity {
         contact.setName(name.getText().toString());
         contact.setEmail(email.getText().toString());
 
-        ///TODO: save contact to database
+        /// TODO: save contact to database
     }
 
 

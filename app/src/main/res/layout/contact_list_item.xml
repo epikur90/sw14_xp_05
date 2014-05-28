@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="10dp"
-    android:textSize="16sp"
-    android:textColor="#666"
-    >
-</TextView>
+    android:padding="-3dip" android:layout_height="?android:attr/listPreferredItemHeight">
+
+    <ImageView
+        android:id="@+id/contactImage"
+        android:paddingLeft="-3dp"
+        android:layout_width="90dip"
+        android:layout_height="90dip"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/contactName"
+        android:text="name here"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_toRightOf="@id/contactImage"
+        android:textColor="#ff313131"
+        android:paddingTop="15dp"
+        android:paddingLeft="10dp"
+        android:textSize="25dp" />
+
+</RelativeLayout>

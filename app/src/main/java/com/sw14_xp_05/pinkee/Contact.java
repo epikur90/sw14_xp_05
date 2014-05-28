@@ -1,9 +1,11 @@
 package com.sw14_xp_05.pinkee;
 
+import java.io.Serializable;
+
 /**
  * Created by michael on 21.05.14.
  */
-public class Contact {
+public class Contact implements Serializable {
 
     private String forename;
     private String name;
@@ -17,8 +19,8 @@ public class Contact {
     public static final String DB_COL_PICTURE = "picture";
 
     public Contact() {
-        this.forename = "john";
-        this.name = "doe";
+        this.forename = "John";
+        this.name = "Doe";
         this.email = "john.doe@yourmama.com";
         this.picture_link = "johndoecontactimage";
     }
@@ -68,5 +70,13 @@ public class Contact {
     }
 
 
+    public String toString() {
 
+        if (forename.equals("") || name.equals(""))
+            return email;
+
+        return forename + " " + name;
+        //return "Contact [forename=" + forename + ", name=" + name +
+                //", email=" + email + ", picture_link=" +picture_link + "]";
+    }
 }
