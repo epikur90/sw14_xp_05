@@ -51,6 +51,7 @@ public class MessageList extends ListView {
         if (message.getMessageText().isEmpty()) return;
 
         dbhelper.saveMessage(message);
+        dbhelper.saveContact(message.getContact());
         listAdapter.add(message);
 
 	}

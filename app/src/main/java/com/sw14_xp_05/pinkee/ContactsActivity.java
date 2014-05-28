@@ -46,11 +46,11 @@ public class ContactsActivity extends ActionBarActivity implements OnClickListen
 
         Common utils = new Common();
 
-        if (!utils.isLoggenIn()) {
+        /*if (!utils.isLoggenIn()) {
             Intent intent = AccountPicker.newChooseAccountIntent(null, null,
                     new String[]{"com.google"}, false, null, null, null, null);
             startActivityForResult(intent, 2);
-        }
+        }*/
 
         dbhelper = new SQLiteStorageHelper(this.getBaseContext());
         valueList = dbhelper.getContacts();

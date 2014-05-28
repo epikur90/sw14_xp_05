@@ -71,6 +71,7 @@ public class ChatListAdapter extends BaseAdapter {
 
     public void add(Message message) {
         searchArrayList.add(message);
+        message.getContact().setLastMessage(message.getDate());
         notifyDataSetChanged();
     }
 
