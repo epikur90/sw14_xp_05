@@ -1,14 +1,27 @@
 package com.sw14_xp_05.pinkee;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.util.Log;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.app.Activity;
+import android.database.Cursor;
+import android.provider.MediaStore;
+import android.content.Context;
+import android.net.Uri;
+import java.io.InputStream;
+import java.io.FileNotFoundException;
+
 import android.view.View.OnFocusChangeListener;
 
 public class ProfileActivity extends ActionBarActivity {
@@ -18,6 +31,7 @@ public class ProfileActivity extends ActionBarActivity {
     EditText forename;
     EditText name;
     TextView email;
+    ImageView profileImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +50,28 @@ public class ProfileActivity extends ActionBarActivity {
         name.setText(contact.getName());
         email = (TextView) findViewById(R.id.emailView);
         email.setText(contact.getEmail());
+        profileImageView = (ImageView) findViewById(R.id.profilePictureView);
+        profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, 999);
+            }
+        });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            final Uri imageUri = data.getData();
+            Log.d("#uri", imageUri.toString());
+            final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+            profileImageView.setImageBitmap(selectedImage);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void onPause() {
