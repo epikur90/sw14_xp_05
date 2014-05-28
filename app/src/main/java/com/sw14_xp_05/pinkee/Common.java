@@ -1,8 +1,5 @@
 package com.sw14_xp_05.pinkee;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Application;
@@ -10,12 +7,23 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Patterns;
 
+import com.sw14_xp_05.gcm.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Common extends Application {   
 	 
     public static String[] email_arr;
     private static SharedPreferences prefs;
     private boolean logged_in = false;
+
+    public static final String ACTION_REGISTER = "com.sw.nam.REGISTER";
+    public static final String EXTRA_STATUS = "status";
+
+    public static final int STATUS_SUCCESS = 1;
+    public static final int STATUS_FAILED = 0;
     
     @Override
     public void onCreate() {
@@ -39,5 +47,34 @@ public class Common extends Application {
             }
         }
         return lst;
-    }   
+    }
+
+    public static String getPreferredEmail() {
+        return prefs.getString("chat_email_id", email_arr.length==0 ? "" : email_arr[0]);
+    }
+
+    public static String getDisplayName() {
+        String email = getPreferredEmail();
+        return prefs.getString("display_name", email.substring(0, email.indexOf('@')));
+    }
+
+    public static boolean isNotify() {
+        return prefs.getBoolean("notifications_new_message", true);
+    }
+
+    public static boolean isVibrate() {
+        return prefs.getBoolean("notifications_new_message_vibrate", true);
+    }
+
+    public static String getRingtone() {
+        return prefs.getString("notifications_new_message_ringtone", android.provider.Settings.System.DEFAULT_NOTIFICATION_URI.toString());
+    }
+
+    public static String getServerUrl() {
+        return prefs.getString("server_url_pref", Constants.SERVER_URL);
+    }
+
+    public static String getSenderId() {
+        return prefs.getString("sender_id_pref", Constants.SENDER_ID);
+    }
 }
