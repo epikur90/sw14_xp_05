@@ -32,6 +32,7 @@ public class SettingsActivity extends ActionBarActivity {
     private Button buttonBackground;
     private Button buttonShare;
     private Button buttontheme;
+    private Button buttonSavechat;
 
     public static final String MyPreferences = "MyPrefs";
     public static final String Mycolor = "Mycolor";
@@ -71,6 +72,14 @@ public class SettingsActivity extends ActionBarActivity {
         this.buttontheme.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent newActivity0 = new Intent(SettingsActivity.this, ThemeActivity.class);
+                startActivity(newActivity0);
+            }
+        });
+
+        this.buttonSavechat = (Button) this.findViewById(R.id.ButtonSavechat);
+        this.buttonSavechat.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent newActivity0 = new Intent(SettingsActivity.this, SavechatActivity.class);
                 startActivity(newActivity0);
             }
         });

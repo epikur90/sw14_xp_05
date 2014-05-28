@@ -90,6 +90,10 @@
             android:label="@string/title_activity_theme" >
         </activity>
         <activity
+            android:name="com.sw14_xp_05.pinkee.SavechatActivity"
+            android:label="@string/title_activity_savechat" >
+        </activity>
+        <activity
             android:name="com.sw14_xp_05.pinkee.ContactsActivity"
             android:label="@string/title_activity_contacts" >
         </activity>
