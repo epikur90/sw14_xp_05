@@ -105,9 +105,11 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
     // automatically handle clicks on the Home/Up button, so long
     // as you specify a parent activity in AndroidManifest.xml.
     int id = item.getItemId();
-    if (id == R.id.action_settings) {
-      return true;
-    }
+      if (id == R.id.action_settings) {
+          Intent newActivity0 = new Intent(ListActivity.this, SettingsActivity.class);
+          startActivity(newActivity0);
+          return true;
+      }
     if (id == R.id.action_add_contact) {
 
           // Set an EditText view to get user input
