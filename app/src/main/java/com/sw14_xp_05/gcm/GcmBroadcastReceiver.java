@@ -15,10 +15,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.sw14_xp_05.pinkee.Common;
-import com.sw14_xp_05.pinkee.ListActivity;
-import com.sw14_xp_05.pinkee.R;
 import com.sw14_xp_05.gcm.DataProvider.MessageType;
+import com.sw14_xp_05.pinkee.ChatActivity;
+import com.sw14_xp_05.pinkee.Common;
+import com.sw14_xp_05.pinkee.R;
 
 public class GcmBroadcastReceiver extends BroadcastReceiver {
 	
@@ -75,7 +75,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 		}
 		
 		if (launchApp) {
-			Intent intent = new Intent(ctx, ListActivity.class);
+			Intent intent = new Intent(ctx, ChatActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 			PendingIntent pi = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 			notification.setContentIntent(pi);
