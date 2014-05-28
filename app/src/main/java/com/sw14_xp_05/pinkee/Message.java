@@ -1,25 +1,29 @@
 package com.sw14_xp_05.pinkee;
 
-import android.widget.ImageButton;
-
 import java.util.Date;
 
 public class Message {
     private String messageText;
-    private String senderEmail;
-    private Date dateSent;
-    private Date dateReceived;
+    private Contact contact;
+    private Date date;
 
-    public Message(String messageText, String senderEmail, Date dateSent, Date dateReceived){
+    public static final String DB_TABLE = "message";
+    public static final String DB_COL_ID = "id";
+    public static final String DB_COL_MESSAGETEXT = "messageText";
+    public static final String DB_COL_CONTACT = "contact";
+    public static final String DB_COL_DATE = "date";
+
+    public Message(String messageText, Contact contact, Date date) {
         this.messageText = messageText;
-        this.senderEmail = senderEmail;
-        this.dateSent = dateSent;
-        this.dateReceived = dateReceived;
+        this.contact = contact;
+        this.date = date;
     }
 
-    public Message(String messageText){
-        this(messageText, null, new Date(), null);
+    public Message(String messageText, Contact contact){
+        this(messageText, contact, new Date());
     }
+
+    public Message(){this("", null,null);}
 
     public String getMessageText() {
         return messageText;
@@ -29,28 +33,24 @@ public class Message {
         this.messageText = messageText;
     }
 
-    public String getSenderEmail() {
-        return senderEmail;
+    public Contact getContact() {
+        return contact;
     }
 
-    public void setSenderEmail(String senderEmail) {
-        this.senderEmail = senderEmail;
+    public String getContactID() {
+        return contact.getEmail();
     }
 
-    public Date getDateSent() {
-        return dateSent;
+    public void setContact(Contact contact) {
+        this.contact = contact;
     }
 
-    public void setDateSent(Date dateSent) {
-        this.dateSent = dateSent;
+    public Date getDate() {
+        return date;
     }
 
-    public Date getDateReceived() {
-        return dateReceived;
-    }
-
-    public void setDateReceived(Date dateReceived) {
-        this.dateReceived = dateReceived;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String toString() {
@@ -58,6 +58,6 @@ public class Message {
     }
 
     public boolean isIncoming() {
-        return senderEmail != null;
+        return contact != null;
     }
 }

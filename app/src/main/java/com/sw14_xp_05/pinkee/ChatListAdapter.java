@@ -17,6 +17,7 @@ public class ChatListAdapter extends BaseAdapter {
     private static ArrayList<Message> searchArrayList;
 
     private LayoutInflater inflater;
+    private  SQLiteStorageHelper dbhelper;
 
     public ChatListAdapter(Context context, ArrayList<Message> results) {
         searchArrayList = results;
@@ -54,7 +55,7 @@ public class ChatListAdapter extends BaseAdapter {
         Message message = searchArrayList.get(position);
 
         holder.messageText.setText(searchArrayList.get(position).getMessageText());
-        holder.date.setText(searchArrayList.get(position).getDateSent().toString());
+        holder.date.setText(searchArrayList.get(position).getDate().toString());
 
         RelativeLayout wrapper = (RelativeLayout) convertView.findViewById(R.id.wrapper);
         wrapper.setGravity(position % 2 != 0 ? Gravity.LEFT : Gravity.RIGHT);
@@ -71,6 +72,7 @@ public class ChatListAdapter extends BaseAdapter {
     public void add(Message message) {
         searchArrayList.add(message);
         notifyDataSetChanged();
+
     }
 
     private static class ViewHolder {

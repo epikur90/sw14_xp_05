@@ -4,32 +4,54 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.EditText;
+import android.util.Log;
+import android.view.View.OnFocusChangeListener;
 
 
 public class ProfileActivity extends ActionBarActivity {
 
     private Contact contact;
 
+    EditText forename;
+    EditText name;
+    TextView email;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        ///TODO: get contact from server
+        ///TODO: get contact from server, with id, which must be given from click on contact list item
         contact = new Contact("Michael", "Scheucher", "michischeucher@gmail.com", "bildresource");
 
 
-        TextView forename_view = (TextView) findViewById(R.id.forenameView);
-        forename_view.setText(contact.getForename());
+        //TextView forename_view = (TextView) findViewById(R.id.forenameView);
+        //forename_view.setText(contact.getForename());
 
-        TextView name_view = (TextView) findViewById(R.id.nameView);
-        name_view.setText(contact.getName());
+        forename = (EditText) findViewById(R.id.editForename);
+        forename.setText(contact.getForename());
+        name = (EditText) findViewById(R.id.editName);
+        name.setText(contact.getName());
+        email = (TextView) findViewById(R.id.emailView);
+        email.setText(contact.getEmail());
 
-        TextView email_view = (TextView) findViewById(R.id.emailView);
-        email_view.setText(contact.getEmail());
+    }
 
+
+
+    public void onPause() {
+        super.onPause();
+        Log.i("ProfileActivity", "onPause");
+        contact.setForename(forename.getText().toString());
+        contact.setName(name.getText().toString());
+        contact.setEmail(email.getText().toString());
+
+        ///TODO: save contact to database
     }
 
 
