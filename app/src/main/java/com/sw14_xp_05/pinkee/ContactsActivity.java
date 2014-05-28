@@ -17,8 +17,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.util.Log;
@@ -31,13 +33,16 @@ import java.util.ArrayList;
 
 public class ContactsActivity extends ActionBarActivity implements OnClickListener {
 
-    private ArrayAdapter<String> adapter;
-    private ArrayList<String> valueList;
+    private ContactListAdapter adapter;
+    private SQLiteStorageHelper dbhelper;
+    private ArrayList<Contact> valueList;
+    private ListView lv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("ContactsActivity", "onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contacts);
+        setContentView(R.layout.activity_list);
 
         Common utils = new Common();
 
@@ -47,22 +52,13 @@ public class ContactsActivity extends ActionBarActivity implements OnClickListen
             startActivityForResult(intent, 2);
         }
 
-        Vector<String> names = new Vector<String>();
-        names.add("Mickey Mouse");
-        names.add("Veronika");
-        names.add("Nore Ply");
+        dbhelper = new SQLiteStorageHelper(this.getBaseContext());
+        valueList = dbhelper.getContacts();
 
-        // Dummy contacts
-        ArrayList<String> valueList = new ArrayList<String>();
-        for (int i = 0; i < names.size(); i++) {
-            valueList.add(names.elementAt(i));
-        }
+        adapter = new ContactListAdapter(getApplicationContext(), valueList);
 
-        Log.i("ContactsActivity", "vor adapter creation");
-        adapter = new ArrayAdapter<String>(getApplicationContext(),
-                R.layout.contact_list_item, valueList);
+        lv = (ListView) findViewById(R.id.listView);
 
-        final ListView lv = (ListView) findViewById(R.id.contactsView);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -70,8 +66,9 @@ public class ContactsActivity extends ActionBarActivity implements OnClickListen
                                     int position, long id) {
                 System.out.println(view.getClass().getName());
                 Intent new_activity_profile = new Intent(ContactsActivity.this, ProfileActivity.class);
-                startActivity(new_activity_profile);
 
+                new_activity_profile.putExtra("contact", adapter.getItem(position));
+                startActivity(new_activity_profile);
             }
 
         });
@@ -124,7 +121,7 @@ public class ContactsActivity extends ActionBarActivity implements OnClickListen
                             }
                             else{
                                 dialog.dismiss();
-                                valueList.add(emailEditText.getText().toString());
+                                valueList.add(new Contact("","",emailEditText.getText().toString(), "link"));
                                 adapter.notifyDataSetChanged();
                             }
 
@@ -168,6 +165,14 @@ public class ContactsActivity extends ActionBarActivity implements OnClickListen
     @Override
     public void onClick(View v) {
 
+    }
 
+    @Override
+    public void onResume() {
+        Log.d("#ONRESUME", "NOTIFY, BITCH");
+        super.onResume();
+        adapter.setSearchArrayList(dbhelper.getContacts());
+
+        this.adapter.notifyDataSetChanged();
     }
 }

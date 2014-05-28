@@ -2,11 +2,10 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:padding="-3dip" android:layout_height="?android:attr/listPreferredItemHeight">
+    android:layout_height="?android:attr/listPreferredItemHeight">
 
     <ImageView
         android:id="@+id/contactImage"
-        android:paddingLeft="-3dp"
         android:layout_width="90dip"
         android:layout_height="90dip"
         android:src="@drawable/logo" />

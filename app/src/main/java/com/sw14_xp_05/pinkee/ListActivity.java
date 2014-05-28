@@ -48,18 +48,18 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
 
     Common utils = new Common();
 
-/*
+
     if (!utils.isLoggenIn()) {
       Intent intent = AccountPicker.newChooseAccountIntent(null, null,
                                                            new String[]{"com.google"}, false, null, null, null, null);
       startActivityForResult(intent, 2);
 
 
-    }*/
+    }
 
     dbhelper = new SQLiteStorageHelper(this.getBaseContext());
 
-    Contact c1 = new Contact();
+/*    Contact c1 = new Contact();
     Contact c2 = new Contact("Hugo","Hodor","hugoh@yourmama.com","link1");
     Contact c3 = new Contact("Heinzi","Wieauchimmer","heinzw@yourmama.com","link2");
     Contact c4 = new Contact("Eva","Kuier","evakuier@yourmama.com","link3");
@@ -71,7 +71,7 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
     dbhelper.saveContact(c3);
     dbhelper.saveContact(c4);
     dbhelper.saveContact(c5);
-    dbhelper.saveContact(c6);
+    dbhelper.saveContact(c6);*/
 
     valueList = dbhelper.getContacts();
 

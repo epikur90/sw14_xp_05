@@ -115,18 +115,38 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             return false;
         }
 
+        Cursor cursor = db.rawQuery("SELECT * from " + Contact.DB_TABLE + " where " +
+                        Contact.DB_COL_EMAIL + " = '" + contact.getEmail() + "'", null);
+
+        long result = 0;
         ContentValues values = new ContentValues();
-        values.put(Contact.DB_COL_FORENAME, contact.getForename());
-        values.put(Contact.DB_COL_NAME, contact.getName());
-        values.put(Contact.DB_COL_EMAIL, contact.getEmail());
-        values.put(Contact.DB_COL_PICTURE, contact.getPicture_link());
 
-        long result = db.insert(Contact.DB_TABLE, null, values);
-        db.close();
+        if (cursor.getCount() > 0){
+            // update
+            String strFilter = Contact.DB_COL_EMAIL + "= '" + contact.getEmail() +"'";
+            values.put(Contact.DB_COL_FORENAME, contact.getForename());
+            values.put(Contact.DB_COL_NAME, contact.getName());
+            values.put(Contact.DB_COL_PICTURE, contact.getPicture_link());
 
-      if (result == -1){
-          Log.d("error", "saveContact insertion failed");
-          return false;
+            result = db.update(Contact.DB_TABLE, values, strFilter, null);
+
+        } else {
+            // insert
+            //ContentValues values = new ContentValues();
+            values.put(Contact.DB_COL_FORENAME, contact.getForename());
+            values.put(Contact.DB_COL_NAME, contact.getName());
+            values.put(Contact.DB_COL_EMAIL, contact.getEmail());
+            values.put(Contact.DB_COL_PICTURE, contact.getPicture_link());
+
+            result = db.insert(Contact.DB_TABLE, null, values);
+        }
+
+        cursor.close();
+
+        if (result == -1){
+          //db.update(Contact.DB_TABLE, null, values);
+            Log.d("error", "saveContact insertion failed");
+            return false;
       } else
           return true;
     }

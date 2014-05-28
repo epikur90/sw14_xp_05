@@ -24,8 +24,7 @@ public class ProfileActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        ///TODO: get contact from database, with id, which must be given from click on contact list item
-        contact = new Contact("Michael", "Scheucher", "michischeucher@gmail.com", "bildresource");
+        this.contact =  (Contact) getIntent().getSerializableExtra("contact");
 
 
         //TextView forename_view = (TextView) findViewById(R.id.forenameView);
@@ -46,9 +45,9 @@ public class ProfileActivity extends ActionBarActivity {
         Log.i("ProfileActivity", "onPause");
         contact.setForename(forename.getText().toString());
         contact.setName(name.getText().toString());
-        contact.setEmail(email.getText().toString());
-
-        /// TODO: save contact to database
+        //contact.setEmail(email.getText().toString());
+        SQLiteStorageHelper dbhelper = new SQLiteStorageHelper(getBaseContext());
+        dbhelper.saveContact(contact);
     }
 
 

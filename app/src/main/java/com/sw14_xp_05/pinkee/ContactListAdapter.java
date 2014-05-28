@@ -20,6 +20,10 @@ import java.util.ArrayList;
  */
 public class ContactListAdapter extends BaseAdapter {
 
+    public static void setSearchArrayList(ArrayList<Contact> searchArrayList) {
+        ContactListAdapter.searchArrayList = searchArrayList;
+    }
+
     private static ArrayList<Contact> searchArrayList;
 
     private LayoutInflater inflater;
@@ -60,11 +64,13 @@ public class ContactListAdapter extends BaseAdapter {
 
         Contact contact = searchArrayList.get(position);
 
-        holder.contactName.setText(searchArrayList.get(position).getFullName());
+        holder.contactName.setText(searchArrayList.get(position).toString());
         //holder.contactImage.setImage
 
         return convertView;
     }
+
+
 
     private static class ViewHolder {
         TextView contactName;
