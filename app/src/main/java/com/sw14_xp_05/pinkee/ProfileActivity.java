@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.util.Log;
 import android.view.View.OnFocusChangeListener;
 
-
 public class ProfileActivity extends ActionBarActivity {
 
     private Contact contact;
@@ -20,13 +19,12 @@ public class ProfileActivity extends ActionBarActivity {
     EditText name;
     TextView email;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        ///TODO: get contact from server, with id, which must be given from click on contact list item
+        ///TODO: get contact from database, with id, which must be given from click on contact list item
         contact = new Contact("Michael", "Scheucher", "michischeucher@gmail.com", "bildresource");
 
 

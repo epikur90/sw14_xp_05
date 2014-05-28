@@ -70,6 +70,30 @@
             android:label="@string/title_activity_profile" >
         </activity>
         <activity
+            android:name="com.sw14_xp_05.pinkee.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name="com.sw14_xp_05.pinkee.InfoActivity"
+            android:label="@string/title_activity_info" >
+        </activity>
+        <activity
+            android:name="com.sw14_xp_05.pinkee.BackgroundActivity"
+            android:label="@string/title_activity_background" >
+        </activity>
+        <activity
+            android:name="com.sw14_xp_05.pinkee.ShareActivity"
+            android:label="@string/title_activity_share" >
+        </activity>
+        <activity
+            android:name="com.sw14_xp_05.pinkee.ThemeActivity"
+            android:label="@string/title_activity_theme" >
+        </activity>
+        <activity
+            android:name="com.sw14_xp_05.pinkee.SavechatActivity"
+            android:label="@string/title_activity_savechat" >
+        </activity>
+        <activity
             android:name="com.sw14_xp_05.pinkee.ContactsActivity"
             android:label="@string/title_activity_contacts" >
         </activity>
