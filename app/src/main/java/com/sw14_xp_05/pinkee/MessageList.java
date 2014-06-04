@@ -50,8 +50,6 @@ public class MessageList extends ListView {
 
         dbhelper.saveMessage(message);
         dbhelper.saveContact(message.getContact());
-        listAdapter.add(message);
-
 	}
 
     public Contact getContact() {
@@ -68,5 +66,11 @@ public class MessageList extends ListView {
 
         listAdapter = new ChatListAdapter(getContext(), valueList);
         setAdapter(listAdapter);
+    }
+
+    public void updateMessages(Message message){
+        if(contact.getEmail().equals(message.getContactID())){
+            listAdapter.add(message);
+        }
     }
 }

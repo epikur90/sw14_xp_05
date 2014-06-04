@@ -20,15 +20,26 @@ import com.sw14_xp_05.pinkee.ChatActivity;
 import com.sw14_xp_05.pinkee.Common;
 import com.sw14_xp_05.pinkee.Contact;
 import com.sw14_xp_05.pinkee.Message;
+import com.sw14_xp_05.pinkee.MessageList;
 import com.sw14_xp_05.pinkee.R;
 import com.sw14_xp_05.pinkee.SQLiteStorageHelper;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class GcmBroadcastReceiver extends BroadcastReceiver {
 	
 	private static final String TAG = "GcmBroadcastReceiver";
-	private Context ctx;	
+	private Context ctx;
+    private ArrayList<MessageList> observers;
+
+    public GcmBroadcastReceiver(){
+        observers = new ArrayList<MessageList>();
+    }
+
+    public void registerObserver(MessageList observer){
+        this.observers.add(observer);
+    }
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -64,8 +75,6 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
                 // If right chatactivity is open, put message in chat
                 if(ChatActivity.getActiveContact() == null){
                     sendNotification(msg, true, sender);
-                } else {
-
                 }
 
 //				if (Common.isNotify()) {
