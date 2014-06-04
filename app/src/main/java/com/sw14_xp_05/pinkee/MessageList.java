@@ -1,12 +1,10 @@
 package com.sw14_xp_05.pinkee;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class MessageList extends ListView {
 	
@@ -38,7 +36,7 @@ public class MessageList extends ListView {
 	}
 
 	public void init() {
-        dbhelper = new SQLiteStorageHelper(this.getContext());
+        dbhelper = SQLiteStorageHelper.getInstance(this.getContext());
 
         setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 		setStackFromBottom(true);
@@ -52,8 +50,6 @@ public class MessageList extends ListView {
 
         dbhelper.saveMessage(message);
         dbhelper.saveContact(message.getContact());
-        listAdapter.add(message);
-
 	}
 
     public Contact getContact() {
@@ -70,5 +66,11 @@ public class MessageList extends ListView {
 
         listAdapter = new ChatListAdapter(getContext(), valueList);
         setAdapter(listAdapter);
+    }
+
+    public void updateMessages(Message message){
+        if(contact.getEmail().equals(message.getContactID())){
+            listAdapter.add(message);
+        }
     }
 }

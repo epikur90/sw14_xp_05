@@ -1,8 +1,5 @@
 package com.sw14_xp_05.pinkee;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,17 +17,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.util.Log;
-
-
-import com.google.android.gms.common.AccountPicker;
 
 import java.util.ArrayList;
 
@@ -59,7 +50,7 @@ public class ContactsActivity extends ActionBarActivity implements OnClickListen
             startActivityForResult(intent, 2);
         }*/
 
-        dbhelper = new SQLiteStorageHelper(this.getBaseContext());
+        dbhelper = SQLiteStorageHelper.getInstance(this.getBaseContext());
         valueList = dbhelper.getContacts();
 
         adapter = new ContactListAdapter(getApplicationContext(), valueList);

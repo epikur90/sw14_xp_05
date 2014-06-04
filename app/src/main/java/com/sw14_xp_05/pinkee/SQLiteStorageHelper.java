@@ -1,11 +1,12 @@
 package com.sw14_xp_05.pinkee;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.content.Context;
-import android.content.ContentValues;
 import android.util.Log;
-import android.database.Cursor;
+
 import java.util.ArrayList;
 import java.util.Date;
 /**
@@ -25,14 +26,29 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             + Contact.DB_COL_FORENAME + " text,"
             + Contact.DB_COL_NAME + " text,"
             + Contact.DB_COL_PICTURE + " text)";
+    private static SQLiteStorageHelper instance;
+    private ArrayList<MessageList> observers;
 
-    public SQLiteStorageHelper(Context context, String name, CursorFactory factory,
+    private SQLiteStorageHelper(Context context, String name, CursorFactory factory,
                                 int version){
         super(context, name, factory, version);
+        observers = new ArrayList<MessageList>();
     }
 
-    public SQLiteStorageHelper(Context context){
+    private SQLiteStorageHelper(Context context){
         this(context, DB_DEFAULT_NAME, null, 1);
+    }
+
+    public static SQLiteStorageHelper getInstance(Context context){
+        if(instance == null){
+            instance = new SQLiteStorageHelper(context);
+        }
+
+        return instance;
+    }
+
+    public void registerObserver(MessageList observer){
+        this.observers.add(observer);
     }
 
     @Override
@@ -75,8 +91,16 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
         if (result == -1){
             Log.d("error", "saveMessage insertion failed");
             return false;
-        } else
+        } else {
+            notifyObservers(message);
             return true;
+        }
+    }
+
+    private void notifyObservers(Message message){
+        for(MessageList ml : observers){
+            ml.updateMessages(message);
+        }
     }
 
     public ArrayList<Message> getMessages(Contact contact){
@@ -174,9 +198,10 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * from " + Contact.DB_TABLE +
                          " where " + Contact.DB_COL_EMAIL +"='" + email +"'", null);
+        cursor.moveToFirst();
 
         Contact contact = new Contact();
-        contact.setForename( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_FORENAME )));
+        contact.setForename(cursor.getString(cursor.getColumnIndex(Contact.DB_COL_FORENAME)));
         contact.setName( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_NAME )));
         contact.setEmail( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_EMAIL )));
         contact.setPicture_link( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_PICTURE )));

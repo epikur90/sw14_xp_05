@@ -22,8 +22,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.AccountPicker;
-
 import java.util.ArrayList;
 
 
@@ -52,7 +50,7 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
 
     }*/
 
-    dbhelper = new SQLiteStorageHelper(this.getBaseContext());
+    dbhelper = SQLiteStorageHelper.getInstance(this.getBaseContext());
 
     Contact c1 = new Contact();
     Contact c2 = new Contact("Hugo","Hodor","hugoh@yourmama.com","link1");
