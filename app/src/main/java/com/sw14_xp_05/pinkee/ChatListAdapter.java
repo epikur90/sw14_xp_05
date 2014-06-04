@@ -77,13 +77,17 @@ public class ChatListAdapter extends BaseAdapter {
         holder.date.setText(searchArrayList.get(position).getDate().toString());
 
         RelativeLayout wrapper = (RelativeLayout) convertView.findViewById(R.id.wrapper);
-        if(message.isIncoming())
-        {
+        if(message.isIncoming()) {
             wrapper.setGravity( Gravity.RIGHT);
+<<<<<<< HEAD
             wrapper.setBackgroundColor(Color.parseColor(sendchange));
         }
         else
         {
+=======
+            wrapper.setBackgroundColor(Color.GREEN);
+        } else {
+>>>>>>> a1a1173805c9397ca00d504ccc665a2e6bd184de
             wrapper.setGravity( Gravity.LEFT);
             wrapper.setBackgroundColor(Color.parseColor(receivechange));
         }
