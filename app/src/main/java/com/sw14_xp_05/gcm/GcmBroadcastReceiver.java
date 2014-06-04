@@ -37,11 +37,9 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 			String messageType = gcm.getMessageType(intent);
 			if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
 				sendNotification("Send error", false);
-                Log.d("GcmBroadcastProvider", "send error");
 			} else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
 				sendNotification("Deleted messages on server", false);
-                Log.d("GcmBroadcastProvider", "Deleted messages on server");
-			} else {
+  			} else {
 				String msg = intent.getStringExtra(DataProvider.COL_MESSAGE);
                 Log.d("GcmBroadcastProvider", "Message received: " + msg);
                 String senderEmail = intent.getStringExtra(DataProvider.COL_SENDER_EMAIL);
@@ -52,7 +50,8 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 				values.put(DataProvider.COL_SENDER_EMAIL, senderEmail);
 				values.put(DataProvider.COL_RECEIVER_EMAIL, receiverEmail);
 				context.getContentResolver().insert(DataProvider.CONTENT_URI_MESSAGES, values);
-				
+
+
 				if (Common.isNotify()) {
 					sendNotification(msg, true);
 				}
@@ -73,9 +72,11 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 		if (!TextUtils.isEmpty(Common.getRingtone())) {
 			notification.setSound(Uri.parse(Common.getRingtone()));
 		}
-		
+
 		if (launchApp) {
 			Intent intent = new Intent(ctx, ChatActivity.class);
+
+
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 			PendingIntent pi = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 			notification.setContentIntent(pi);

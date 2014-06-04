@@ -1,6 +1,5 @@
 package com.sw14_xp_05.pinkee;
 
-import java.util.ArrayList;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
@@ -8,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.util.Log;
+
+import java.util.ArrayList;
 
 public class ChatListAdapter extends BaseAdapter {
     private static ArrayList<Message> searchArrayList;
@@ -71,7 +70,7 @@ public class ChatListAdapter extends BaseAdapter {
 
     public void add(Message message) {
         searchArrayList.add(message);
-        message.getContact().setLastMessage(message.getDate());
+        //TODO message.getContact().setLastMessage(message.getDate());
         notifyDataSetChanged();
     }
 

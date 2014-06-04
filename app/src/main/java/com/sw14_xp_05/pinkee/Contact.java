@@ -19,7 +19,6 @@ public class Contact implements Serializable {
     public static final String DB_COL_FORENAME = "forename";
     public static final String DB_COL_NAME = "name";
     public static final String DB_COL_PICTURE = "picture";
-    public static final String DB_COL_LASTMESSAGE = "lastMessage";
 
     public Contact() {
         this.forename = "John";
@@ -39,10 +38,6 @@ public class Contact implements Serializable {
 
     public Date getLastMessage() {
         return lastMessage;
-    }
-
-    public void setLastMessage(Date lastMessage) {
-        this.lastMessage = lastMessage;
     }
 
     public String getFullName() {
