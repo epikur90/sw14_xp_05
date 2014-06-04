@@ -24,7 +24,8 @@
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/buttonSend"
         android:ems="10"
-        android:background="#e6e6e6">
+        android:background="#e6e6e6"
+        android:layout_below="@+id/messageList">
 
         <requestFocus />
     </EditText>
