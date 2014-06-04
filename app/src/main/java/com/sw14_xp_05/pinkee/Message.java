@@ -6,24 +6,27 @@ public class Message {
     private String messageText;
     private Contact contact;
     private Date date;
+    private boolean incoming;
 
     public static final String DB_TABLE = "message";
     public static final String DB_COL_ID = "id";
     public static final String DB_COL_MESSAGETEXT = "messageText";
     public static final String DB_COL_CONTACT = "contact";
     public static final String DB_COL_DATE = "date";
+    public static final String DB_COL_INCOMING = "incoming";
 
-    public Message(String messageText, Contact contact, Date date) {
+    public Message(String messageText, Contact contact, Date date, boolean incoming) {
         this.messageText = messageText;
         this.contact = contact;
         this.date = date;
+        this.incoming = incoming;
     }
 
     public Message(String messageText, Contact contact){
-        this(messageText, contact, new Date());
+        this(messageText, contact, new Date(), false);
     }
 
-    public Message(){this("", null,null);}
+    public Message(){this("", null,null, false);}
 
     public String getMessageText() {
         return messageText;
@@ -58,6 +61,10 @@ public class Message {
     }
 
     public boolean isIncoming() {
-        return contact != null;
+        return incoming;
+    }
+
+    public void setIncoming(boolean incoming) {
+        this.incoming = incoming;
     }
 }

@@ -46,8 +46,6 @@ public class MessageList extends ListView {
 	}
 	
 	public void displayMessage(Message message){
-        if (message.getMessageText().isEmpty()) return;
-
         dbhelper.saveMessage(message);
         dbhelper.saveContact(message.getContact());
 	}
@@ -72,5 +70,10 @@ public class MessageList extends ListView {
         if(contact.getEmail().equals(message.getContactID())){
             listAdapter.add(message);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof MessageList ? ((MessageList)o).getContact().getEmail().equals(contact.getEmail()) : false;
     }
 }
