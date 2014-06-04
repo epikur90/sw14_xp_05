@@ -57,8 +57,18 @@ public class ChatListAdapter extends BaseAdapter {
         holder.date.setText(searchArrayList.get(position).getDate().toString());
 
         RelativeLayout wrapper = (RelativeLayout) convertView.findViewById(R.id.wrapper);
-        wrapper.setGravity(position % 2 != 0 ? Gravity.LEFT : Gravity.RIGHT);
-        wrapper.setBackgroundColor(position % 2 != 0 ? Color.LTGRAY: Color.TRANSPARENT);
+        if(message.isIncoming())
+        {
+            wrapper.setGravity( Gravity.RIGHT);
+            wrapper.setBackgroundColor(Color.GREEN);
+        }
+        else
+        {
+            wrapper.setGravity( Gravity.LEFT);
+            wrapper.setBackgroundColor(Color.BLUE);
+        }
+        //wrapper.setGravity(position % 2 != 0 ? Gravity.LEFT : Gravity.RIGHT);
+        //wrapper.setBackgroundColor(position % 2 != 0 ? Color.LTGRAY: Color.TRANSPARENT);
 
         TextView field = (TextView) convertView.findViewById(R.id.messageText);
         TextView dateField = (TextView) convertView.findViewById(R.id.date);

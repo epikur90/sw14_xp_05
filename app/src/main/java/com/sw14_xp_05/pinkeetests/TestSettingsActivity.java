@@ -41,7 +41,7 @@ public class TestSettingsActivity extends ActivityInstrumentationTestCase2<Setti
         for( int i = 0; i < 4; i++)
         {
             solo.clickOnButton("theme");
-            solo.clickOnButton(i);
+            solo.clickOnImageButton(i);
         }
     }
 

@@ -99,6 +99,8 @@ public class ProfileActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            Intent newActivity0 = new Intent(ProfileActivity.this, SettingsActivity.class);
+            startActivity(newActivity0);
             return true;
         }
         return super.onOptionsItemSelected(item);

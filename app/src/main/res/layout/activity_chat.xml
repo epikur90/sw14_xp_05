@@ -24,8 +24,7 @@
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/buttonSend"
         android:ems="10"
-        android:background="#e6e6e6"
-        android:layout_below="@+id/messageList">
+        android:background="#e6e6e6">
 
         <requestFocus />
     </EditText>
@@ -37,6 +36,7 @@
         android:layout_above="@+id/buttonSend"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/textviewshape"/>
+        android:background="@drawable/textviewshape"
+        android:alpha="0.70"/>
 
 </RelativeLayout>
