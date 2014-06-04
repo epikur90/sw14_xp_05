@@ -56,16 +56,22 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 				values.put(DataProvider.COL_RECEIVER_EMAIL, receiverEmail);
 				context.getContentResolver().insert(DataProvider.CONTENT_URI_MESSAGES, values);
 
-                SQLiteStorageHelper helper = new SQLiteStorageHelper(ctx);
+                SQLiteStorageHelper helper = SQLiteStorageHelper.getInstance(ctx);
                 Contact sender = helper.getContact(senderEmail);
 
                 helper.saveMessage(new Message(msg, sender, new Date()));
 
                 // If right chatactivity is open, put message in chat
+                if(ChatActivity.getActiveContact() == null){
+                    sendNotification(msg, true, sender);
+                } else {
 
-				if (Common.isNotify()) {
-					sendNotification(msg, true, sender);
-				}
+                }
+
+//				if (Common.isNotify()) {
+//
+//				}
+
 			}
 			setResultCode(Activity.RESULT_OK);
 		} finally {

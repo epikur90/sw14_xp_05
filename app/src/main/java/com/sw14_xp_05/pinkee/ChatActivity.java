@@ -146,6 +146,7 @@ public class ChatActivity extends ActionBarActivity {
 		}
 	}
 
+    @Override
     protected void onResume()
     {
         super.onResume();
@@ -176,6 +177,12 @@ public class ChatActivity extends ActionBarActivity {
         this.messageList.initAdapter();
 
         activeContact = this.contact;
+    }
+
+    @Override
+    protected void onPause() {
+        activeContact = null;
+        super.onPause();
     }
 
     private BroadcastReceiver registrationStatusReceiver = new  BroadcastReceiver() {

@@ -36,7 +36,7 @@ public class MessageList extends ListView {
 	}
 
 	public void init() {
-        dbhelper = new SQLiteStorageHelper(this.getContext());
+        dbhelper = SQLiteStorageHelper.getInstance(this.getContext());
 
         setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 		setStackFromBottom(true);

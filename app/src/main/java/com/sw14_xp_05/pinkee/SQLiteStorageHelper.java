@@ -25,14 +25,23 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             + Contact.DB_COL_FORENAME + " text,"
             + Contact.DB_COL_NAME + " text,"
             + Contact.DB_COL_PICTURE + " text)";
+    private static SQLiteStorageHelper instance;
 
-    public SQLiteStorageHelper(Context context, String name, CursorFactory factory,
+    private SQLiteStorageHelper(Context context, String name, CursorFactory factory,
                                 int version){
         super(context, name, factory, version);
     }
 
-    public SQLiteStorageHelper(Context context){
+    private SQLiteStorageHelper(Context context){
         this(context, DB_DEFAULT_NAME, null, 1);
+    }
+
+    public static SQLiteStorageHelper getInstance(Context context){
+        if(instance == null){
+            instance = new SQLiteStorageHelper(context);
+        }
+
+        return instance;
     }
 
     @Override
@@ -177,7 +186,7 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         Contact contact = new Contact();
-        contact.setForename( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_FORENAME )));
+        contact.setForename(cursor.getString(cursor.getColumnIndex(Contact.DB_COL_FORENAME)));
         contact.setName( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_NAME )));
         contact.setEmail( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_EMAIL )));
         contact.setPicture_link( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_PICTURE )));

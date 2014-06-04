@@ -1,30 +1,24 @@
 package com.sw14_xp_05.pinkee;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.EditText;
-import android.util.Log;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.app.Activity;
-import android.database.Cursor;
-import android.provider.MediaStore;
-import android.content.Context;
-import android.net.Uri;
-import java.io.InputStream;
-import java.io.FileNotFoundException;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import android.view.View.OnFocusChangeListener;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class ProfileActivity extends ActionBarActivity {
 
@@ -86,7 +80,7 @@ public class ProfileActivity extends ActionBarActivity {
         contact.setForename(forename.getText().toString());
         contact.setName(name.getText().toString());
         //contact.setEmail(email.getText().toString());
-        SQLiteStorageHelper dbhelper = new SQLiteStorageHelper(getBaseContext());
+        SQLiteStorageHelper dbhelper = SQLiteStorageHelper.getInstance(getBaseContext());
         dbhelper.saveContact(contact);
     }
 
