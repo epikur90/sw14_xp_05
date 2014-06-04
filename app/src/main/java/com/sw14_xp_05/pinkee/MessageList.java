@@ -1,12 +1,10 @@
 package com.sw14_xp_05.pinkee;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class MessageList extends ListView {
 	

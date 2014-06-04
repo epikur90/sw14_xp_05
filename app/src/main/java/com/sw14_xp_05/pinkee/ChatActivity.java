@@ -33,6 +33,7 @@ public class ChatActivity extends ActionBarActivity {
 	private Button buttonSend;
 	private EditText textFieldMessage;
 	private MessageList messageList;
+    private static Contact activeContact;
     private Contact contact;
     private GcmUtil gcmUtil;
 
@@ -48,13 +49,6 @@ public class ChatActivity extends ActionBarActivity {
 		this.buttonSend = (Button) this.findViewById(R.id.buttonSend);
 		this.textFieldMessage = (EditText) this.findViewById(R.id.textFieldMessage);
 		this.messageList = (MessageList) this.findViewById(R.id.messageList);
-
-        this.contact =  (Contact) getIntent().getSerializableExtra("contact");
-        Log.d("chatactivity", contact.getEmail());
-
-        this.messageList.setContact(this.contact);
-        this.messageList.initAdapter();
-        Log.d("chatactivity", this.messageList.getContact().getEmail());
 
 		this.buttonSend.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -77,6 +71,7 @@ public class ChatActivity extends ActionBarActivity {
         registerReceiver(registrationStatusReceiver, new IntentFilter(Common.ACTION_REGISTER));
         gcmUtil = new GcmUtil(getApplicationContext());
 	}
+
 
     private void send(final String txt) {
         new AsyncTask<Void, Void, String>() {
@@ -174,6 +169,13 @@ public class ChatActivity extends ActionBarActivity {
 
             background.setBackgroundResource(Themechange);
         }
+
+        this.contact =  (Contact) getIntent().getSerializableExtra("contact");
+
+        this.messageList.setContact(this.contact);
+        this.messageList.initAdapter();
+
+        activeContact = this.contact;
     }
 
     private BroadcastReceiver registrationStatusReceiver = new  BroadcastReceiver() {
@@ -193,4 +195,8 @@ public class ChatActivity extends ActionBarActivity {
             }
         }
     };
+
+    public static Contact getActiveContact(){
+        return activeContact;
+    }
 }

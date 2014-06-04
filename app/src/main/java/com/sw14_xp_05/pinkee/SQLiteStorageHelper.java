@@ -174,6 +174,7 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * from " + Contact.DB_TABLE +
                          " where " + Contact.DB_COL_EMAIL +"='" + email +"'", null);
+        cursor.moveToFirst();
 
         Contact contact = new Contact();
         contact.setForename( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_FORENAME )));
