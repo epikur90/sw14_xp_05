@@ -1,6 +1,7 @@
 package com.sw14_xp_05.pinkee;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,7 +17,11 @@ public class ChatListAdapter extends BaseAdapter {
     private static ArrayList<Message> searchArrayList;
 
     private LayoutInflater inflater;
-    private  SQLiteStorageHelper dbhelper;
+    private SQLiteStorageHelper dbhelper;
+
+    public static final String MyPreferences = "MyPrefs";
+    public static final String MyRcolor = "MyRcolor";
+    public static final String MyScolor = "MyScolor";
 
     public ChatListAdapter(Context context, ArrayList<Message> results) {
         searchArrayList = results;
@@ -35,8 +40,23 @@ public class ChatListAdapter extends BaseAdapter {
         return position;
     }
 
+
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+
+        final SharedPreferences sharedpreferences = inflater.getContext().getSharedPreferences(MyPreferences, Context.MODE_PRIVATE);
+        String sendchange = "#FFFFFF";
+        String receivechange = "#FFFFFF";
+
+        if(sharedpreferences.contains(MyRcolor))
+        {
+            receivechange = sharedpreferences.getString(MyRcolor, "");
+        }
+
+        if(sharedpreferences.contains(MyScolor))
+        {
+            sendchange = sharedpreferences.getString(MyScolor,"");
+        }
 
         if (convertView == null) {
 
@@ -60,15 +80,18 @@ public class ChatListAdapter extends BaseAdapter {
         if(message.isIncoming())
         {
             wrapper.setGravity( Gravity.RIGHT);
-            wrapper.setBackgroundColor(Color.GREEN);
+            wrapper.setBackgroundColor(Color.parseColor(sendchange));
         }
         else
         {
             wrapper.setGravity( Gravity.LEFT);
-            wrapper.setBackgroundColor(Color.BLUE);
+            wrapper.setBackgroundColor(Color.parseColor(receivechange));
         }
         //wrapper.setGravity(position % 2 != 0 ? Gravity.LEFT : Gravity.RIGHT);
         //wrapper.setBackgroundColor(position % 2 != 0 ? Color.LTGRAY: Color.TRANSPARENT);
+
+
+
 
         TextView field = (TextView) convertView.findViewById(R.id.messageText);
         TextView dateField = (TextView) convertView.findViewById(R.id.date);

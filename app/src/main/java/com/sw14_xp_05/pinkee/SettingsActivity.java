@@ -33,6 +33,8 @@ public class SettingsActivity extends ActionBarActivity {
     private Button buttonShare;
     private Button buttontheme;
     private Button buttonSavechat;
+    private Button buttonReceivecolor;
+    private Button buttonSendcolor;
 
     public static final String MyPreferences = "MyPrefs";
     public static final String Mycolor = "Mycolor";
@@ -80,6 +82,22 @@ public class SettingsActivity extends ActionBarActivity {
         this.buttonSavechat.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent newActivity0 = new Intent(SettingsActivity.this, SavechatActivity.class);
+                startActivity(newActivity0);
+            }
+        });
+
+        this.buttonSendcolor = (Button) this.findViewById(R.id.Buttonsendcolor);
+        this.buttonSendcolor.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent newActivity0 = new Intent(SettingsActivity.this, sendcolorActivity.class);
+                startActivity(newActivity0);
+            }
+        });
+
+        this.buttonReceivecolor = (Button) this.findViewById(R.id.Buttonreceivecolor);
+        this.buttonReceivecolor.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent newActivity0 = new Intent(SettingsActivity.this, receivecolorActivity.class);
                 startActivity(newActivity0);
             }
         });
