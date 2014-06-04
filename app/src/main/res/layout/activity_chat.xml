@@ -8,12 +8,13 @@
 
     <Button
         android:id="@+id/buttonSend"
-        android:layout_width="wrap_content"
+        android:layout_width="110px"
         android:layout_height="wrap_content"
+        android:text="Send"
+        android:background="@drawable/buttonshape"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/textFieldMessage"
-        android:text="Send" />
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:id="@+id/textFieldMessage"
@@ -22,7 +23,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/buttonSend"
-        android:ems="10" >
+        android:ems="10"
+        android:background="#e6e6e6">
 
         <requestFocus />
     </EditText>
@@ -33,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonSend"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:background="@drawable/textviewshape"/>
 
 </RelativeLayout>

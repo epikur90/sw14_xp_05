@@ -39,7 +39,7 @@ public class ThemeActivity extends ActionBarActivity {
                 Editor editor = sharedpreferences.edit();
 
                 Integer theme = R.drawable.space;
-                editor.clear();
+                editor.remove(Mycolor);
                 editor.putInt(Mytheme, theme);
                 editor.commit();
                 finish();
@@ -51,7 +51,7 @@ public class ThemeActivity extends ActionBarActivity {
                 Editor editor = sharedpreferences.edit();
 
                 Integer theme = R.drawable.flower;
-                editor.clear();
+                editor.remove(Mycolor);
                 editor.putInt(Mytheme, theme);
                 editor.commit();
                 finish();
@@ -63,7 +63,7 @@ public class ThemeActivity extends ActionBarActivity {
                 Editor editor = sharedpreferences.edit();
 
                 Integer theme = R.drawable.confetti;
-                editor.clear();
+                editor.remove(Mycolor);
                 editor.putInt(Mytheme, theme);
                 editor.commit();
                 finish();
@@ -75,7 +75,7 @@ public class ThemeActivity extends ActionBarActivity {
                 Editor editor = sharedpreferences.edit();
 
                 Integer theme = R.drawable.superman;
-                editor.clear();
+                editor.remove(Mycolor);
                 editor.putInt(Mytheme, theme);
                 editor.commit();
                 finish();
