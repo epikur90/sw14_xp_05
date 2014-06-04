@@ -1,6 +1,9 @@
 package com.sw14_xp_05.pinkee;
 
 import java.io.IOException;
+import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import android.content.Context;
@@ -17,6 +20,8 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.gson.Gson;
+import com.sw14_xp_05.gcm.ServerUtilities;
 import com.sw14_xp_05.pinkee.R;
 
 public class RegisterActivity extends ActionBarActivity {
@@ -179,11 +184,19 @@ public class RegisterActivity extends ActionBarActivity {
                     // so it can use GCM/HTTP or CCS to send messages to your app.
                     // The request to your server should be authenticated if your app
                     // is using accounts.
-                    sendRegistrationIdToBackend();
+//                    sendRegistrationIdToBackend();
 
-                    // For this demo: we don't need to send it because the device
-                    // will send upstream messages to a server that echo back the
-                    // message using the 'from' address in the message.
+                    //create key
+                    PinkoCryptRSA crypter = new PinkoCryptRSA();
+                    KeyPair key_pair = crypter.getRsa_key();
+                    //send public, regid and email to server
+                    PinKeeKee pkk_public = new PinKeeKee(key_pair.getPublic());
+                    String pub_key = pkk_public.getGsonObject();
+                    ServerUtilities.register(Common.getPreferredEmail(), regid, pub_key);
+
+                    //store private key
+                    PinKeeKee.saveKey(key_pair.getPrivate(), context);
+
 
                     // Persist the regID - no need to register again.
                     storeRegistrationId(context, regid);
@@ -192,6 +205,10 @@ public class RegisterActivity extends ActionBarActivity {
                     // If there is an error, don't just keep trying to register.
                     // Require the user to click a button again, or perform
                     // exponential back-off.
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeySpecException e) {
+                    e.printStackTrace();
                 }
                 return msg;
             }

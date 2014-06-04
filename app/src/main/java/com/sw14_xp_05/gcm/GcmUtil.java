@@ -139,8 +139,10 @@ public class GcmUtil {
 		                    gcm = GoogleCloudMessaging.getInstance(ctx);
 		                }
 		                String regid = gcm.register(Common.getSenderId());
-	
-		                ServerUtilities.register(Common.getPreferredEmail(), regid);
+
+
+
+//		                ServerUtilities.register(Common.getPreferredEmail(), regid, );
 	
 		                setRegistrationId(regid);
 		                return Boolean.TRUE;

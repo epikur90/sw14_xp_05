@@ -1,8 +1,11 @@
 package com.sw14_xp_05.pinkeetests;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.google.android.gms.internal.de;
+import com.sw14_xp_05.pinkee.PinKeeKee;
 import com.sw14_xp_05.pinkee.PinkoCrypt;
 import com.sw14_xp_05.pinkee.PinkoCryptRSA;
 
@@ -17,9 +20,11 @@ import java.io.IOException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
+
 
 public class TestPinkoCryptRSA extends TestCase {
 
@@ -29,6 +34,8 @@ public class TestPinkoCryptRSA extends TestCase {
 
     private String encrypt_me;
     PinkoCryptRSA crypter;
+
+    Context mBase;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -43,7 +50,6 @@ public class TestPinkoCryptRSA extends TestCase {
 
 
     public void testGenerateKeys() throws InvalidKeySpecException, NoSuchAlgorithmException {
-        crypter.generateRSAKey();
         KeyPair rsa_keys = crypter.getRsa_key();
 
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
@@ -71,8 +77,6 @@ public class TestPinkoCryptRSA extends TestCase {
 
 
     public void testEncryptDecrypt() throws InvalidKeySpecException, NoSuchAlgorithmException, IOException {
-        crypter.generateRSAKey();
-
         String encrypted = crypter.encryptData(encrypt_me);
         String decrypted = "";
         decrypted = crypter.decryptData(encrypted);
@@ -81,6 +85,8 @@ public class TestPinkoCryptRSA extends TestCase {
             fail("Encryption does not work properly.");
         }
     }
+
+
 
 }
 

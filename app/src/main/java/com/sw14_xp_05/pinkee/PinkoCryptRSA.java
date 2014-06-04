@@ -22,53 +22,69 @@ public class PinkoCryptRSA {
     }
 
     private KeyPair rsa_key;
+    private PublicKey public_key;
+    private PrivateKey private_key;
 
-    public PinkoCryptRSA(){
+    public static final String PREFERENCE_NAME = "Security";
 
+
+    public PinkoCryptRSA() throws InvalidKeySpecException, NoSuchAlgorithmException {
+        generateRSAKey();
     }
 
-    public void generateRSAKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public PinkoCryptRSA(PublicKey pub_key){
+        public_key = pub_key;
+        private_key = null;
+    }
+
+    public PinkoCryptRSA(PrivateKey priv_key){
+        public_key = null;
+        private_key = priv_key;
+    }
+
+    private void generateRSAKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
         keyPairGenerator.initialize(1024);
         rsa_key = keyPairGenerator.generateKeyPair();
+        public_key = rsa_key.getPublic();
+        private_key = rsa_key.getPrivate();
 
     }
 
     public String encryptData(String data) throws IOException {
-      //  Log.d("encryptData", "start of function");
-
+        if(public_key == null){
+            return "ERROR: NO PUBLIC KEY";
+        }
         byte[] dataToEncrypt = data.getBytes();
         byte[] encryptedData = null;
         try {
-            PublicKey pubKey = rsa_key.getPublic();
             Cipher cipher = Cipher.getInstance("RSA");
-            cipher.init(Cipher.ENCRYPT_MODE, pubKey);
+            cipher.init(Cipher.ENCRYPT_MODE, public_key);
             encryptedData = cipher.doFinal(dataToEncrypt);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-     //   Log.d("encryptData", "end of function");
+        //   Log.d("encryptData", "end of function");
 
         return byteArrayToString(encryptedData);
     }
 
     public String decryptData(String input_string) throws IOException {
-      //  Log.d("decryptData", "start of function");
+        if(private_key == null){
+            return "ERROR: NO PRIVATE KEY";
+        }
         byte[] data = StringToByteArray(input_string);
         byte[] decryptedData = null;
 
         try {
-            PrivateKey privateKey = rsa_key.getPrivate();
             Cipher cipher = Cipher.getInstance("RSA");
-            cipher.init(Cipher.DECRYPT_MODE, privateKey);
+            cipher.init(Cipher.DECRYPT_MODE, private_key);
             decryptedData = cipher.doFinal(data);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-      //  Log.d("decryptData", "end of function");
         return byteArrayToString(decryptedData);
     }
 
@@ -92,5 +108,7 @@ public class PinkoCryptRSA {
         }
         return barray;
     }
+
+
 
 }
