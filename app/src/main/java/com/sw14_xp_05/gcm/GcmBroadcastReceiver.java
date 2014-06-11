@@ -15,15 +15,22 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.gson.Gson;
 import com.sw14_xp_05.gcm.DataProvider.MessageType;
 import com.sw14_xp_05.pinkee.ChatActivity;
 import com.sw14_xp_05.pinkee.Common;
 import com.sw14_xp_05.pinkee.Contact;
 import com.sw14_xp_05.pinkee.Message;
 import com.sw14_xp_05.pinkee.MessageList;
+import com.sw14_xp_05.pinkee.PinKeeKee;
+import com.sw14_xp_05.pinkee.PinkoCryptRSA;
 import com.sw14_xp_05.pinkee.R;
 import com.sw14_xp_05.pinkee.SQLiteStorageHelper;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -51,18 +58,29 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 		try {
 			GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(context);
 			String messageType = gcm.getMessageType(intent);
-			if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
+            if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
 				//TODO sendNotification("Send error", false);
 			} else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
 				//TODO sendNotification("Deleted messages on server", false);
   			} else {
 				String msg = intent.getStringExtra(DataProvider.COL_MESSAGE);
-                Log.d("GcmBroadcastProvider", "Message received: " + msg);
+
+                //just for debugging
+                PrivateKey private_key = PinKeeKee.loadPrivateKey(context);
+                PinKeeKee pkk_private = new PinKeeKee(private_key);
+                PinkoCryptRSA decrypter = new PinkoCryptRSA(private_key);
+                String decrypted_msg = decrypter.decryptData(msg);
+                Gson gson = new Gson();
+                Log.d("GcmUtil", "private_key_string = " + gson.toJson(pkk_private));
+
+
+                Log.d("Cryptoooo", "Message received: " + msg);
+                Log.d("Cryptoooo", "Message received (decrypted): " + decrypted_msg);
                 String senderEmail = intent.getStringExtra(DataProvider.COL_SENDER_EMAIL);
 				String receiverEmail = intent.getStringExtra(DataProvider.COL_RECEIVER_EMAIL);
 				ContentValues values = new ContentValues(2);
 				values.put(DataProvider.COL_TYPE,  MessageType.INCOMING.ordinal());				
-				values.put(DataProvider.COL_MESSAGE, msg);
+				values.put(DataProvider.COL_MESSAGE, decrypted_msg);
 				values.put(DataProvider.COL_SENDER_EMAIL, senderEmail);
 				values.put(DataProvider.COL_RECEIVER_EMAIL, receiverEmail);
 				context.getContentResolver().insert(DataProvider.CONTENT_URI_MESSAGES, values);
@@ -75,11 +93,11 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
                     helper.saveContact(sender);
                 }
 
-                helper.saveMessage(new Message(msg, sender, new Date(), true));
+                helper.saveMessage(new Message(decrypted_msg, sender, new Date(), true));
 
                 // If right chatactivity is open, put message in chat
                 if(ChatActivity.getActiveContact() == null){
-                    sendNotification(msg, true, sender);
+                    sendNotification(decrypted_msg, true, sender);
                 }
 
 //				if (Common.isNotify()) {
@@ -88,7 +106,13 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 
 			}
 			setResultCode(Activity.RESULT_OK);
-		} finally {
+		} catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
 			mWakeLock.release();
 		}
 	}

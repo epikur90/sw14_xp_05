@@ -28,6 +28,10 @@ import com.sw14_xp_05.gcm.GcmUtil;
 import com.sw14_xp_05.gcm.ServerUtilities;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.util.concurrent.ExecutionException;
 
 public class ChatActivity extends ActionBarActivity {
 
@@ -37,6 +41,7 @@ public class ChatActivity extends ActionBarActivity {
     private static Contact activeContact;
     private Contact contact;
     private GcmUtil gcmUtil;
+    private PinkoCryptRSA encrypter;
 
     public static final String MyPreferences = "MyPrefs";
     public static final String Mycolor = "Mycolor";
@@ -51,7 +56,10 @@ public class ChatActivity extends ActionBarActivity {
 		this.textFieldMessage = (EditText) this.findViewById(R.id.textFieldMessage);
 		this.messageList = (MessageList) this.findViewById(R.id.messageList);
 
-		this.buttonSend.setOnClickListener(new View.OnClickListener() {
+
+
+
+        this.buttonSend.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
                 if (textFieldMessage.getText().toString().equals("")) return;
 
@@ -72,8 +80,11 @@ public class ChatActivity extends ActionBarActivity {
 		}
 
         registerReceiver(registrationStatusReceiver, new IntentFilter(Common.ACTION_REGISTER));
-        gcmUtil = new GcmUtil(getApplicationContext());
+
         SQLiteStorageHelper.getInstance(getApplicationContext()).registerObserver(messageList);
+
+
+
 	}
 
 
@@ -82,21 +93,26 @@ public class ChatActivity extends ActionBarActivity {
             @Override
             protected String doInBackground(Void... params) {
                 String msg = "";
+                String targetEmail = contact.getEmail();
                 try {
-                    String targetEmail = contact.getEmail();
-                    ServerUtilities.send(txt, targetEmail);
-                    Log.d("ChatActivity", "Sending message to: " + targetEmail);
-                    ContentValues values = new ContentValues(2);
-                    values.put(DataProvider.COL_TYPE,  DataProvider.MessageType.OUTGOING.ordinal());
-                    values.put(DataProvider.COL_MESSAGE, txt);
-                    values.put(DataProvider.COL_RECEIVER_EMAIL, targetEmail);
-                    values.put(DataProvider.COL_SENDER_EMAIL, Common.getPreferredEmail());
-                    getContentResolver().insert(DataProvider.CONTENT_URI_MESSAGES, values);
-                    Log.d("ChatActivity", "Message was send: " + txt);
-                } catch (IOException ex) {
-                    msg = "Message could not be sent";
-                    Log.e("ChatActivity", msg);
+                    Log.d("Cryptooooo", "encrypted = " + encrypter.encryptData(txt));
+                    ServerUtilities.send(encrypter.encryptData(txt), targetEmail);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeySpecException e) {
+                    e.printStackTrace();
                 }
+                Log.d("ChatActivity", "Sending message to: " + targetEmail);
+                ContentValues values = new ContentValues(2);
+                values.put(DataProvider.COL_TYPE,  DataProvider.MessageType.OUTGOING.ordinal());
+                values.put(DataProvider.COL_MESSAGE, txt);
+                values.put(DataProvider.COL_RECEIVER_EMAIL, targetEmail);
+                values.put(DataProvider.COL_SENDER_EMAIL, Common.getPreferredEmail());
+                getContentResolver().insert(DataProvider.CONTENT_URI_MESSAGES, values);
+                Log.d("ChatActivity", "Message was send: " + txt);
+
                 return msg;
             }
 
@@ -151,8 +167,7 @@ public class ChatActivity extends ActionBarActivity {
 	}
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
 
         final SharedPreferences sharedpreferences = getSharedPreferences(MyPreferences, Context.MODE_PRIVATE);
@@ -161,21 +176,19 @@ public class ChatActivity extends ActionBarActivity {
 
         View background = getWindow().getDecorView();
 
-        if(sharedpreferences.contains(Mycolor))
-        {
+        if (sharedpreferences.contains(Mycolor)) {
             Colorchange = sharedpreferences.getString(Mycolor, "");
 
             background.setBackgroundColor(Color.parseColor(Colorchange));
         }
 
-        if(sharedpreferences.contains(Mytheme))
-        {
-            Themechange = sharedpreferences.getInt(Mytheme,0);
+        if (sharedpreferences.contains(Mytheme)) {
+            Themechange = sharedpreferences.getInt(Mytheme, 0);
 
             background.setBackgroundResource(Themechange);
         }
 
-        this.contact =  (Contact) getIntent().getSerializableExtra("contact");
+        this.contact = (Contact) getIntent().getSerializableExtra("contact");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             getActionBar().setTitle(contact.toString());
@@ -185,6 +198,46 @@ public class ChatActivity extends ActionBarActivity {
         this.messageList.initAdapter();
 
         activeContact = this.contact;
+        SQLiteStorageHelper helper = SQLiteStorageHelper.getInstance(getBaseContext());
+
+        String public_key_string = contact.getPublicKey();
+        if (public_key_string == null) {
+            //get public key from server
+            try {
+                public_key_string = ServerUtilities.askPublicKeyString(contact.getEmail());
+                contact.setPublicKey(public_key_string);
+                helper.saveContact(contact);
+                PinKeeKee pkk_public = PinKeeKee.getObjectFromGson(public_key_string);
+                PublicKey public_key = null;
+                public_key = PinKeeKee.generatePublicKey(pkk_public);
+                encrypter = new PinkoCryptRSA(public_key);
+                Log.d("ChatActivity", "onResume - public_key_string = " + public_key_string);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (InvalidKeySpecException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            Log.d("ChatActivity", "onResume - public key NOT found");
+        } else {
+            PinKeeKee pkk_public = PinKeeKee.getObjectFromGson(public_key_string);
+            PublicKey public_key = null;
+            try {
+                public_key = PinKeeKee.generatePublicKey(pkk_public);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (InvalidKeySpecException e) {
+                e.printStackTrace();
+            }
+            encrypter = new PinkoCryptRSA(public_key);
+            Log.d("ChatActivity", "onResume - public key found");
+
+        }
+
+
     }
 
     @Override

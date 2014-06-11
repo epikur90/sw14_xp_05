@@ -60,26 +60,6 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:text="save files"
-                android:id="@+id/button10"
-                android:background="@drawable/buttonshape"
-                android:layout_margin="10dp"
-                android:layout_gravity="center_horizontal"/>
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:text="save chat"
-                android:id="@+id/ButtonSavechat"
-                android:background="@drawable/buttonshape"
-                android:layout_margin="10dp"
-                android:layout_gravity="center_horizontal"/>
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
                 android:text="chat send color"
                 android:id="@+id/Buttonsendcolor"
                 android:background="@drawable/buttonshape"

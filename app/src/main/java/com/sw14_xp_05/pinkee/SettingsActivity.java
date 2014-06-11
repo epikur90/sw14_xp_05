@@ -5,23 +5,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 
-import com.google.android.gms.common.AccountPicker;
+import com.sw14_xp_05.gcm.ServerUtilities;
 
-import java.util.ArrayList;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by ASUS on 07.05.2014.
@@ -42,6 +36,11 @@ public class SettingsActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.d("SettingsActivity", "onCreate - begin");
+
+//        ServerUtilities.SendAndReceive.execute("michischeucher@gmail.com").get();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -74,14 +73,6 @@ public class SettingsActivity extends ActionBarActivity {
         this.buttontheme.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent newActivity0 = new Intent(SettingsActivity.this, ThemeActivity.class);
-                startActivity(newActivity0);
-            }
-        });
-
-        this.buttonSavechat = (Button) this.findViewById(R.id.ButtonSavechat);
-        this.buttonSavechat.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent newActivity0 = new Intent(SettingsActivity.this, SavechatActivity.class);
                 startActivity(newActivity0);
             }
         });

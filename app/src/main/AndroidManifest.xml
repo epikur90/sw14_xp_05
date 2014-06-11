@@ -49,8 +49,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.sw14_xp_05.pinkee.RegisterActivity" >
-        </activity>
         <activity
             android:name="com.sw14_xp_05.pinkee.LoginActivity"
             android:label="@string/title_activity_login"
@@ -90,10 +88,6 @@
         <activity
             android:name="com.sw14_xp_05.pinkee.ThemeActivity"
             android:label="@string/title_activity_theme" >
-        </activity>
-        <activity
-            android:name="com.sw14_xp_05.pinkee.SavechatActivity"
-            android:label="@string/title_activity_savechat" >
         </activity>
         <activity
             android:name="com.sw14_xp_05.pinkee.sendcolorActivity"

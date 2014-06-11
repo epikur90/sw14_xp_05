@@ -2,6 +2,8 @@ package com.sw14_xp_05.pinkee;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -51,7 +53,15 @@ public class PinkoCryptRSA {
 
     }
 
-    public String encryptData(String data) throws IOException {
+    public String encryptData(String data) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
+        Log.d("PinkoCryptRSA", "before encryption = " + data);
+        //just for debugging
+        PinKeeKee pkk = new PinKeeKee(public_key);
+        Gson gson = new Gson();
+        Log.d("PinkoCryptRSA", "public_key_string = " + gson.toJson(pkk));
+
+
+
         if(public_key == null){
             return "ERROR: NO PUBLIC KEY";
         }
@@ -66,7 +76,7 @@ public class PinkoCryptRSA {
             e.printStackTrace();
         }
         //   Log.d("encryptData", "end of function");
-
+        Log.d("PinkoCryptRSA", "encrypted data = " + byteArrayToString(encryptedData));
         return byteArrayToString(encryptedData);
     }
 
@@ -85,28 +95,57 @@ public class PinkoCryptRSA {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return byteArrayToString(decryptedData);
+        String return_string = new String(decryptedData);
+        return return_string;
     }
 
 
-    public String byteArrayToString(byte[] array) {
+    public static String byteArrayToString(byte[] array) {
         char[] char_array = new char[array.length];
         char c;
         String s = "";
-        for (Byte b : array) {
-            c = (char)b.intValue();
-            s += c;
+
+        int first_bitmuster = 0xF0;
+        int second_bitmuster = 0x0F;
+
+        char first_value = 0;
+        char second_value = 0;
+
+        for (byte b : array) {
+            first_value = (char)(b & first_bitmuster);
+            first_value = (char)(first_value >>> 4);
+            first_value += 97;
+            s += first_value;
+
+            second_value = (char)(b & second_bitmuster);
+            second_value += 97;
+            s += second_value;
         }
+        Log.d("byteArrayToString = ", s);
         return s;
     }
 
-    public byte[] StringToByteArray(String input_string) {
-        char[] char_array = input_string.toCharArray();
-        byte[] barray = new byte[input_string.length()];
-        for (int i = 0 ; i < input_string.length() ; ++i) {
-            barray[i] = (byte)char_array[i];
+
+    public static byte[] StringToByteArray(String input_string) {
+        byte[] bytes = new byte[input_string.length() / 2];
+
+        char first_value = 0;
+        char second_value = 0;
+
+        int counter = 0;
+        for (int i = 0; i < input_string.length(); i = i + 2) {
+            first_value = input_string.charAt(i);
+            first_value -= 97;
+            first_value = (char)(first_value << 4);
+
+            second_value = input_string.charAt(i + 1);
+            second_value -= 97;
+
+            bytes[counter++] = (byte)(first_value | second_value);
+
+            //s += Integer.toHexString(b.intValue()) + "#";
         }
-        return barray;
+        return bytes;
     }
 
 

@@ -15,7 +15,6 @@
     <string name="title_activity_background">activity_background</string>
     <string name="title_activity_share">activity_share</string>
     <string name="title_activity_theme">activity_theme</string>
-    <string name="title_activity_savechat">activity_theme</string>
     <string name="title_activity_receivecolor">activity_receivecolor</string>
     <string name="title_activity_sendcolor">activity_sendcolor</string>
     <string name="action_add_contact">Add Contact</string>

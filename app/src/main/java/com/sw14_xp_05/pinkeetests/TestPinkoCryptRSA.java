@@ -5,6 +5,10 @@ import android.content.SharedPreferences;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.google.android.gms.internal.de;
+import com.sw14_xp_05.gcm.GcmBroadcastReceiver;
+import com.sw14_xp_05.gcm.GcmUtil;
+import com.sw14_xp_05.gcm.ServerUtilities;
+import com.sw14_xp_05.pinkee.ChatActivity;
 import com.sw14_xp_05.pinkee.PinKeeKee;
 import com.sw14_xp_05.pinkee.PinkoCrypt;
 import com.sw14_xp_05.pinkee.PinkoCryptRSA;
@@ -79,6 +83,19 @@ public class TestPinkoCryptRSA extends TestCase {
     public void testEncryptDecrypt() throws InvalidKeySpecException, NoSuchAlgorithmException, IOException {
         String encrypted = crypter.encryptData(encrypt_me);
         String decrypted = "";
+        decrypted = crypter.decryptData(encrypted);
+
+        if (!encrypt_me.equals(decrypted)){
+            fail("Encryption does not work properly.");
+        }
+    }
+
+    public void testSending() throws InvalidKeySpecException, NoSuchAlgorithmException, IOException {
+        String encrypted = crypter.encryptData(encrypt_me);
+        String decrypted = "";
+
+        ServerUtilities.send(encrypted, "michischeucher@gmail.com");
+
         decrypted = crypter.decryptData(encrypted);
 
         if (!encrypt_me.equals(decrypted)){

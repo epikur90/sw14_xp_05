@@ -10,9 +10,17 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.gson.Gson;
 import com.sw14_xp_05.pinkee.Common;
+import com.sw14_xp_05.pinkee.PinKeeKee;
+import com.sw14_xp_05.pinkee.PinkoCryptRSA;
 
 import java.io.IOException;
+import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Random;
 
 public class GcmUtil {
@@ -37,20 +45,23 @@ public class GcmUtil {
 	private GoogleCloudMessaging gcm;
 	private AsyncTask registrationTask;
 
+    private Context context;
+
 	public GcmUtil(Context applicationContext) {
-		super();
-		ctx = applicationContext;
+        super();
+        Log.d("GcmUtil", "constructor begin");
+        ctx = applicationContext;
 		prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 		
 		String regid = getRegistrationId();
-        Log.d("GcmUtil", "String regid = getRegistrationId()... regid=" + regid);
-//        if (regid.length() == 0) {
+        Log.d("GcmUtil", "regid=" + regid);
+        if (regid.length() == 0) {
             Log.d("GcmUtil", "Registering in Background...");
-            registerBackground();
-//        } else {
-//            Log.d("GcmUtil", "broadcastStatus(true)");
-//        	broadcastStatus(true);
-//        }
+            registerBackground(applicationContext);
+        } else {
+            Log.d("GcmUtil", "Already registered");
+        	broadcastStatus(true);
+        }
 		gcm = GoogleCloudMessaging.getInstance(ctx);		
 	}
 	
@@ -127,7 +138,7 @@ public class GcmUtil {
 	 * Stores the registration id, app versionCode, and expiration time in the 
 	 * application's shared preferences.
 	 */
-	private void registerBackground() {
+	private void registerBackground(final Context applicationContext) {
 		registrationTask = new AsyncTask<Void, Void, Boolean>() {
 	        @Override
 	        protected Boolean doInBackground(Void... params) {
@@ -140,6 +151,25 @@ public class GcmUtil {
 		                }
 		                String regid = gcm.register(Common.getSenderId());
 
+                        Log.d("GcmUtil", "Registration from device/user");
+                        //create key
+                        PinkoCryptRSA crypter = new PinkoCryptRSA();
+                        KeyPair key_pair = crypter.getRsa_key();
+
+                        //send public, regid and email to server
+                        PinKeeKee pkk_public = new PinKeeKee(key_pair.getPublic());
+                        String pub_key = pkk_public.getGsonObject();
+                        ServerUtilities.register(Common.getPreferredEmail(), regid, pub_key);
+
+                        //store private key
+                        PinKeeKee.saveKey(key_pair.getPrivate(), applicationContext);
+
+                        //just for debugging
+                        Gson gson = new Gson();
+                        PinKeeKee pkk_private = new PinKeeKee(key_pair.getPrivate());
+                        Log.d("GcmUtil", "############################ NEW KEYSSSSSSSS ###################");
+                        Log.d("GcmUtil", "private_key_string = " + gson.toJson(pkk_private));
+                        Log.d("GcmUtil", "public_key_string = " + gson.toJson(pkk_public));
 
 
 //		                ServerUtilities.register(Common.getPreferredEmail(), regid, );
@@ -157,8 +187,12 @@ public class GcmUtil {
 		                    Thread.currentThread().interrupt();
 		                }
 		                backoff *= 2;		                
-		            }
-	            }
+		            } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeySpecException e) {
+                        e.printStackTrace();
+                    }
+                }
 	            return Boolean.FALSE;
 	        }
 

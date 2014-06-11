@@ -26,7 +26,8 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             + Contact.DB_COL_EMAIL + " text primary key,"
             + Contact.DB_COL_FORENAME + " text,"
             + Contact.DB_COL_NAME + " text,"
-            + Contact.DB_COL_PICTURE + " text)";
+            + Contact.DB_COL_PICTURE + " text,"
+            + Contact.DB_COL_PUBLIC_KEY + " text)";
     private static SQLiteStorageHelper instance;
     private MessageList observer;
 
@@ -36,7 +37,7 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
     }
 
     private SQLiteStorageHelper(Context context){
-        this(context, DB_DEFAULT_NAME, null, 3);
+        this(context, DB_DEFAULT_NAME, null, 4);
     }
 
     public static SQLiteStorageHelper getInstance(Context context){
@@ -157,7 +158,10 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             String strFilter = Contact.DB_COL_EMAIL + "= '" + contact.getEmail() +"'";
             values.put(Contact.DB_COL_FORENAME, contact.getForename());
             values.put(Contact.DB_COL_NAME, contact.getName());
+
             values.put(Contact.DB_COL_PICTURE, contact.getPictureLink());
+            values.put(Contact.DB_COL_PUBLIC_KEY, contact.getPublicKey());
+
 
             result = db.update(Contact.DB_TABLE, values, strFilter, null);
 
@@ -168,6 +172,7 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             values.put(Contact.DB_COL_NAME, contact.getName());
             values.put(Contact.DB_COL_EMAIL, contact.getEmail());
             values.put(Contact.DB_COL_PICTURE, contact.getPictureLink());
+            values.put(Contact.DB_COL_PUBLIC_KEY, contact.getPublicKey());
 
             result = db.insert(Contact.DB_TABLE, null, values);
         }
@@ -203,7 +208,9 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             contact.setForename( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_FORENAME )));
             contact.setName( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_NAME )));
             contact.setEmail( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_EMAIL )));
-            contact.setPictureLink(cursor.getString(cursor.getColumnIndex(Contact.DB_COL_PICTURE)));
+
+            contact.setPictureLink( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_PICTURE )));
+            contact.setPublicKey( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_PUBLIC_KEY )));
             contacts.add(contact);
         }
         cursor.close();
@@ -223,7 +230,9 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             contact.setForename(cursor.getString(cursor.getColumnIndex(Contact.DB_COL_FORENAME)));
             contact.setName( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_NAME )));
             contact.setEmail( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_EMAIL )));
+
             contact.setPictureLink(cursor.getString(cursor.getColumnIndex(Contact.DB_COL_PICTURE)));
+            contact.setPublicKey( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_PUBLIC_KEY )));
         }
 
         cursor.close();
