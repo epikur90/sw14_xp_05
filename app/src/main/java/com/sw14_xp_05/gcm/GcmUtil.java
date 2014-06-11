@@ -50,7 +50,7 @@ public class GcmUtil {
 		prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 		
 		String regid = getRegistrationId();
-        Log.d("GcmUtil", "String regid = getRegistrationId()... regid=" + regid);
+        Log.d("GcmUtil", "regid=" + regid);
         if (regid.length() == 0) {
             Log.d("GcmUtil", "Registering in Background...");
             registerBackground(applicationContext);
