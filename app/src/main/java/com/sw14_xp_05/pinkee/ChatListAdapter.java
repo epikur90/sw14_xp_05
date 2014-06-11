@@ -28,12 +28,6 @@ public class ChatListAdapter extends BaseAdapter {
     public ChatListAdapter(Context context, ArrayList<Message> results) {
         searchArrayList = results;
         inflater = LayoutInflater.from(context);
-
-        add(new Message("1", null, new Date(333), true));
-        add(new Message("2", null, new Date("Sat, 31 May 2014 13:30:00 GMT"), true));
-        add(new Message("3", null, new Date(new Date().getTime() - 40 * 1000 * 60 * 60 * 24), true));
-        add(new Message("4", null, new Date(new Date().getTime() - 3 * 1000 * 60 * 60 * 24), true));
-        add(new Message("5", null, new Date(new Date().getTime() - 1000 * 60 * 60 * 24), true));
     }
 
     public int getCount() {
