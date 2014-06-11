@@ -15,6 +15,7 @@
  */
 package com.sw14_xp_05.gcm;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.sw14_xp_05.pinkee.Common;
@@ -29,6 +30,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Helper class used to communicate with the demo server.
@@ -45,7 +47,7 @@ public final class ServerUtilities {
 	 * Register this account/device pair within the server.
 	 */
 	public static void register(final String email, final String regId, final String pub_key) {
-
+        Log.d("ServerUtilities", "register " + email);
 		String serverUrl = Common.getServerUrl() + "/register";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(DataProvider.SENDER_EMAIL, email);
@@ -61,7 +63,7 @@ public final class ServerUtilities {
 	/**
 	 * Unregister this account/device pair within the server.
 	 */
-	public static void unregister(final String email) {
+	public void unregister(final String email) {
 
 		String serverUrl = Common.getServerUrl() + "/unregister";
 		Map<String, String> params = new HashMap<String, String>();
@@ -72,31 +74,56 @@ public final class ServerUtilities {
 
 		}
 
-	}
-
-    public static String askPublicKeyString(final String email) {
-        Log.i("ServerUtilities", "askPublicKeyString");
-        String public_key_string = "initial public_key_string";
-        String serverUrl = Common.getServerUrl() + "/askPublicKeyString";
-        Map<String, String> params = new HashMap<String, String>();
-
-        params.put(DataProvider.EMAIL, email);
-        try {
-            HttpURLConnection conn = postWithResponse(serverUrl, params, MAX_ATTEMPTS);
-
-            Log.i("ServerUtilities", "askPublicKeyString - after response from server");
-            String text_response_from_server = "response from server";
-
-            return text_response_from_server;
-
-        } catch (IOException e) {
-            public_key_string = "io exception";
-            return public_key_string;
-        } catch (Exception e) {
-            public_key_string = "unknown exception";
-            return public_key_string;
-        }
     }
+
+    public static String askPublicKeyString(String email) throws ExecutionException, InterruptedException {
+        Log.i("ServerUtilities", "askPublicKeyString - begin with email = " + email);
+        String public_key_string = "init";
+
+        SendAndReceive send_and_receive = new SendAndReceive();
+        public_key_string = send_and_receive.execute(email).get();
+
+        Log.i("ServerUtilities", "askPublicKeyString - return from async = " + public_key_string);
+
+        return public_key_string;
+    }
+
+    static class SendAndReceive extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected String doInBackground(String... email) {
+            Log.i("ServerUtilities", "SendAndReceive - doInBackground with email[0] = " + email[0]);
+            String public_key_string = "initial public_key_string";
+            String serverUrl = Common.getServerUrl() + "/getUserInfo";
+            Map<String, String> params = new HashMap<String, String>();
+
+            params.put(DataProvider.USER_INFO, "public_key_request");
+            params.put(DataProvider.RECEIVER_EMAIL, email[0]);
+
+            try {
+
+                Log.i("ServerUtilities", "askPublicKeyString - vor response from server");
+                String text_response_from_server = postWithResponse(serverUrl, params, MAX_ATTEMPTS);
+                Log.i("ServerUtilities", "askPublicKeyString - after response from server");
+
+
+                //conn.disconnect();
+
+                return text_response_from_server;
+
+            } catch (IOException e) {
+                public_key_string = "io exception";
+                return public_key_string;
+            } catch (Exception e) {
+                public_key_string = "unknown exception";
+                return public_key_string;
+            }
+        }
+
+    }
+
+
+
 
 	/**
 	 * Send a message.
@@ -175,9 +202,9 @@ public final class ServerUtilities {
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 
-			OutputStream out = conn.getOutputStream();
-			out.write(bytes);
-			out.close();
+            OutputStream out = conn.getOutputStream();
+            out.write(bytes);
+            out.close();
 
 			int status = conn.getResponseCode();
 			if (status != 200) {
@@ -197,15 +224,15 @@ public final class ServerUtilities {
 
 
     /** Issue a POST with exponential backoff */
-    private static HttpURLConnection postWithResponse(String endpoint, Map<String, String> params, int maxAttempts) throws IOException {
+    private static String postWithResponse(String endpoint, Map<String, String> params, int maxAttempts) throws IOException {
         long backoff = BACKOFF_MILLI_SECONDS + random.nextInt(1000);
         Log.i("ServerUtilities", "postWithResponse1 - begin");
 
         for (int i = 1; i <= maxAttempts; i++) {
 
             try {
-                HttpURLConnection conn = postWithResponse(endpoint, params);
-                return conn;
+
+                return postWithResponse(endpoint, params);
             } catch (IOException e) {
 
                 if (i == maxAttempts) {
@@ -215,14 +242,14 @@ public final class ServerUtilities {
                     Thread.sleep(backoff);
                 } catch (InterruptedException e1) {
                     Thread.currentThread().interrupt();
-                    return null;
+                    return "not working";
                 }
                 backoff *= 2;
             } catch (IllegalArgumentException e) {
                 throw new IOException(e.getMessage(), e);
             }
         }
-        return null;
+        return "not working2";
     }
 
     /**
@@ -233,7 +260,7 @@ public final class ServerUtilities {
      *
      * @throws java.io.IOException propagated from POST.
      */
-    private static HttpURLConnection postWithResponse(String endpoint, Map<String, String> params) throws IOException {
+    private static String postWithResponse(String endpoint, Map<String, String> params) throws IOException {
         URL url;
         Log.i("ServerUtilities", "postWithResponse2 - begin");
 
@@ -260,6 +287,7 @@ public final class ServerUtilities {
         HttpURLConnection conn = null;
         try {
             conn = (HttpURLConnection) url.openConnection();
+            Log.i("ServerUtilities", "postWithResponse2 - connection opened");
             conn.setDoOutput(true);
             conn.setUseCaches(false);
             conn.setFixedLengthStreamingMode(bytes.length);
@@ -269,6 +297,7 @@ public final class ServerUtilities {
             OutputStream out = conn.getOutputStream();
             out.write(bytes);
             out.close();
+            Log.i("ServerUtilities", "postWithResponse2 - outputstream written");
 
             int status = conn.getResponseCode();
             if (status != 200) {
@@ -276,12 +305,20 @@ public final class ServerUtilities {
             } else {
                 Log.i("ServerUtilities", "postWithResponse2 - send was sucessfully");
             }
+            Log.d("ServerUtilities", "postWithResponse2 - getHeaderField = " + conn.getHeaderField(DataProvider.PUB_KEY));
+            return conn.getHeaderField(DataProvider.PUB_KEY);
+        } catch (Exception e) {
+            Log.d("ServerUtilities", "postWithResponse2 - exception = " + e.toString());
+            if (conn != null) {
+                conn.disconnect();
+            }
+            return "not working3";
         } finally {
+            Log.d("ServerUtilities", "postWithResponse2 - finally");
             if (conn != null) {
                 conn.disconnect();
             }
         }
-        return conn;
     }
 
 }

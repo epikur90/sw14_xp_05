@@ -13,12 +13,15 @@ public class Contact implements Serializable {
     private String email;
     private String picture_link;
     private Date lastMessage;
+    private String public_key;
 
     public static final String DB_TABLE = "contact";
     public static final String DB_COL_EMAIL = "email";
     public static final String DB_COL_FORENAME = "forename";
     public static final String DB_COL_NAME = "name";
     public static final String DB_COL_PICTURE = "picture";
+    public static final String DB_COL_PUBLIC_KEY = "public_key";
+
 
     public Contact() {
         this.forename = "John";
@@ -76,6 +79,13 @@ public class Contact implements Serializable {
         this.picture_link = picture_link;
     }
 
+    public String getPublicKey() {
+        return public_key;
+    }
+
+    public void setPublicKey(String public_key) {
+        this.public_key = public_key;
+    }
 
     public String toString() {
 

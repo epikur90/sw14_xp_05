@@ -77,9 +77,9 @@ public class RegisterActivity extends ActionBarActivity {
         	gcm = GoogleCloudMessaging.getInstance(context);
             regid = getRegistrationId(context);
             
-            if (regid.isEmpty()) {
+//            if (regid.isEmpty()) {
                 registerInBackground();
-            }
+//            }
         /*} else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }*/
@@ -189,6 +189,7 @@ public class RegisterActivity extends ActionBarActivity {
                     //create key
                     PinkoCryptRSA crypter = new PinkoCryptRSA();
                     KeyPair key_pair = crypter.getRsa_key();
+
                     //send public, regid and email to server
                     PinKeeKee pkk_public = new PinKeeKee(key_pair.getPublic());
                     String pub_key = pkk_public.getGsonObject();

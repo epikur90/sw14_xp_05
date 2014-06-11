@@ -30,6 +30,7 @@ public class DataProvider extends ContentProvider {
     public static final String MESSAGE 				= "message";
     public static final String PUB_KEY 				= "pub_key";
     public static final String EMAIL 				= "email";
+    public static final String USER_INFO            = "user_info";
 
 
     // TABLE MESSAGE
