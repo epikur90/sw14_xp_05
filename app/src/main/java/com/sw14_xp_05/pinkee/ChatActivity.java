@@ -95,6 +95,7 @@ public class ChatActivity extends ActionBarActivity {
                 String msg = "";
                 String targetEmail = contact.getEmail();
                 try {
+                    Log.d("Cryptooooo", "encrypted = " + encrypter.encryptData(txt));
                     ServerUtilities.send(encrypter.encryptData(txt), targetEmail);
                 } catch (IOException e) {
                     e.printStackTrace();

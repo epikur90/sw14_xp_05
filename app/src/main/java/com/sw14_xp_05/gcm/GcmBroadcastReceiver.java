@@ -58,13 +58,12 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 		try {
 			GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(context);
 			String messageType = gcm.getMessageType(intent);
-			if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
+            if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
 				//TODO sendNotification("Send error", false);
 			} else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
 				//TODO sendNotification("Deleted messages on server", false);
   			} else {
 				String msg = intent.getStringExtra(DataProvider.COL_MESSAGE);
-
 
                 //just for debugging
                 PrivateKey private_key = PinKeeKee.loadPrivateKey(context);
@@ -75,8 +74,8 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
                 Log.d("GcmUtil", "private_key_string = " + gson.toJson(pkk_private));
 
 
-                Log.d("GcmBroadcastProvider", "Message received: " + msg);
-                Log.d("GcmBroadcastProvider", "Message received (decrypted): " + decrypted_msg);
+                Log.d("Cryptoooo", "Message received: " + msg);
+                Log.d("Cryptoooo", "Message received (decrypted): " + decrypted_msg);
                 String senderEmail = intent.getStringExtra(DataProvider.COL_SENDER_EMAIL);
 				String receiverEmail = intent.getStringExtra(DataProvider.COL_RECEIVER_EMAIL);
 				ContentValues values = new ContentValues(2);
