@@ -16,6 +16,8 @@
     <string name="title_activity_share">activity_share</string>
     <string name="title_activity_theme">activity_theme</string>
     <string name="title_activity_savechat">activity_theme</string>
+    <string name="title_activity_receivecolor">activity_receivecolor</string>
+    <string name="title_activity_sendcolor">activity_sendcolor</string>
     <string name="action_add_contact">Add Contact</string>
     <string name="action_add_contact_message">Please enter a valid email address:</string>
     <string name="action_add_contact_invalid_email">This is not valid email address</string>

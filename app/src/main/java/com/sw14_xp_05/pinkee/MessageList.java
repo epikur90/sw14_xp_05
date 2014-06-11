@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import android.util.Log;
 
 public class MessageList extends ListView {
 	
@@ -46,8 +47,6 @@ public class MessageList extends ListView {
 	}
 	
 	public void displayMessage(Message message){
-        if (message.getMessageText().isEmpty()) return;
-
         dbhelper.saveMessage(message);
         dbhelper.saveContact(message.getContact());
 	}
@@ -72,5 +71,11 @@ public class MessageList extends ListView {
         if(contact.getEmail().equals(message.getContactID())){
             listAdapter.add(message);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        Log.d("observer", "called" + ((MessageList)o).getContact().getEmail().equals(contact.getEmail()));
+        return o instanceof MessageList ? ((MessageList)o).getContact().getEmail().equals(contact.getEmail()) : false;
     }
 }

@@ -70,7 +70,12 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
                 SQLiteStorageHelper helper = SQLiteStorageHelper.getInstance(ctx);
                 Contact sender = helper.getContact(senderEmail);
 
-                helper.saveMessage(new Message(msg, sender, new Date()));
+                if (sender == null) {
+                    sender = new Contact("","", senderEmail,"");
+                    helper.saveContact(sender);
+                }
+
+                helper.saveMessage(new Message(msg, sender, new Date(), true));
 
                 // If right chatactivity is open, put message in chat
                 if(ChatActivity.getActiveContact() == null){

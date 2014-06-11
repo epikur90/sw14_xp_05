@@ -75,6 +75,26 @@
                 android:background="@drawable/buttonshape"
                 android:layout_margin="10dp"
                 android:layout_gravity="center_horizontal"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="chat send color"
+                android:id="@+id/Buttonsendcolor"
+                android:background="@drawable/buttonshape"
+                android:layout_margin="10dp"
+                android:layout_gravity="center_horizontal"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="chat receive color"
+                android:id="@+id/Buttonreceivecolor"
+                android:background="@drawable/buttonshape"
+                android:layout_margin="10dp"
+                android:layout_gravity="center_horizontal"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

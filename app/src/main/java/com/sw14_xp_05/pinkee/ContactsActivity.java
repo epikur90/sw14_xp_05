@@ -89,6 +89,8 @@ public class ContactsActivity extends ActionBarActivity implements OnClickListen
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            Intent newActivity0 = new Intent(ContactsActivity.this, SettingsActivity.class);
+            startActivity(newActivity0);
             return true;
         }
         if (id == R.id.action_add_contact) {

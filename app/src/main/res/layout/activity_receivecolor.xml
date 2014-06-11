@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Button
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonRBlue"
+            android:layout_weight="0.04"
+            android:background="#ff1c49ff"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Button
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonRLightBlue"
+            android:layout_weight="0.04"
+            android:background="#1dd2ff"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Button
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonRWhite"
+            android:layout_weight="0.04"
+            android:background="#ffffff"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Button
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonRRed"
+            android:layout_weight="0.06"
+            android:background="#ff1c49"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Button
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonRYellow"
+            android:layout_weight="0.06"
+            android:background="#fffc49"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Button
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonRLightGreen"
+            android:layout_weight="0.04"
+            android:background="#55ff5c"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Button
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonRGreen"
+            android:layout_weight="0.04"
+            android:background="#19aa07"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Button
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonROrange"
+            android:layout_weight="0.04"
+            android:background="#ff6a31"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Button
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonRPink"
+            android:layout_weight="0.04"
+            android:background="#ff1fe9"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Button
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonRPurple"
+            android:layout_weight="0.04"
+            android:background="#b166ff"/>
+    </TableRow>
+
+
+</TableLayout>

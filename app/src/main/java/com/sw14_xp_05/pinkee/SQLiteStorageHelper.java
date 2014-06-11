@@ -19,7 +19,8 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             + Message.DB_COL_ID + " integer primary key autoincrement, "
             + Message.DB_COL_MESSAGETEXT + " text, "
             + Message.DB_COL_CONTACT + " text, "
-            + Message.DB_COL_DATE + " integer)";
+            + Message.DB_COL_DATE + " integer, "
+            + Message.DB_COL_INCOMING + " integer)";
 
     private static final String CONTACT_TABLE = "CREATE TABLE IF NOT EXISTS " + Contact.DB_TABLE + "("
             + Contact.DB_COL_EMAIL + " text primary key,"
@@ -27,16 +28,15 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             + Contact.DB_COL_NAME + " text,"
             + Contact.DB_COL_PICTURE + " text)";
     private static SQLiteStorageHelper instance;
-    private ArrayList<MessageList> observers;
+    private MessageList observer;
 
     private SQLiteStorageHelper(Context context, String name, CursorFactory factory,
                                 int version){
         super(context, name, factory, version);
-        observers = new ArrayList<MessageList>();
     }
 
     private SQLiteStorageHelper(Context context){
-        this(context, DB_DEFAULT_NAME, null, 1);
+        this(context, DB_DEFAULT_NAME, null, 3);
     }
 
     public static SQLiteStorageHelper getInstance(Context context){
@@ -48,7 +48,7 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
     }
 
     public void registerObserver(MessageList observer){
-        this.observers.add(observer);
+        this.observer = observer;
     }
 
     @Override
@@ -59,6 +59,7 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
 
                  db.execSQL(MESSAGE_TABLE);
                  db.execSQL(CONTACT_TABLE);
+                Log.d("dbupdate", "db created");
             }
 
         }
@@ -70,6 +71,10 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
         // some magic happens with your mama
+        db.execSQL("DROP TABLE IF EXISTS " + Message.DB_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + Contact.DB_TABLE);
+        onCreate(db);
+        Log.d("dbupdate", "db updated");
     }
 
     public boolean saveMessage(Message message){
@@ -84,6 +89,7 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
         values.put(Message.DB_COL_MESSAGETEXT, message.getMessageText());
         values.put(Message.DB_COL_CONTACT, message.getContactID());
         values.put(Message.DB_COL_DATE, message.getDate().getTime());
+        values.put(Message.DB_COL_INCOMING, message.isIncoming() ? 1 : 0);
 
         long result = db.insert(Message.DB_TABLE, null, values);
         db.close();
@@ -98,8 +104,8 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
     }
 
     private void notifyObservers(Message message){
-        for(MessageList ml : observers){
-            ml.updateMessages(message);
+        if (observer != null) {
+            observer.updateMessages(message);
         }
     }
 
@@ -124,6 +130,7 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             message.setContact( contact );
             Date date = new Date(cursor.getLong(cursor.getColumnIndexOrThrow(Message.DB_COL_DATE)));
             message.setDate(date);
+            message.setIncoming(cursor.getInt(cursor.getColumnIndex(Message.DB_COL_INCOMING)) == 1 ? true : false);
             result.add(message);
         }
         cursor.close();
@@ -198,13 +205,17 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * from " + Contact.DB_TABLE +
                          " where " + Contact.DB_COL_EMAIL +"='" + email +"'", null);
-        cursor.moveToFirst();
 
-        Contact contact = new Contact();
-        contact.setForename(cursor.getString(cursor.getColumnIndex(Contact.DB_COL_FORENAME)));
-        contact.setName( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_NAME )));
-        contact.setEmail( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_EMAIL )));
-        contact.setPicture_link( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_PICTURE )));
+        Contact contact = null;
+
+        if (cursor.moveToFirst()) {
+            contact = new Contact();
+            contact.setForename(cursor.getString(cursor.getColumnIndex(Contact.DB_COL_FORENAME)));
+            contact.setName( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_NAME )));
+            contact.setEmail( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_EMAIL )));
+            contact.setPicture_link( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_PICTURE )));
+        }
+
         cursor.close();
         db.close();
         return contact;

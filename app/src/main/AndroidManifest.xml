@@ -95,6 +95,14 @@
             android:label="@string/title_activity_savechat" >
         </activity>
         <activity
+            android:name="com.sw14_xp_05.pinkee.sendcolorActivity"
+            android:label="@string/title_activity_sendcolor" >
+        </activity>
+        <activity
+            android:name="com.sw14_xp_05.pinkee.receivecolorActivity"
+            android:label="@string/title_activity_receivecolor" >
+        </activity>
+        <activity
             android:name="com.sw14_xp_05.pinkee.ContactsActivity"
             android:label="@string/title_activity_contacts" >
         </activity>

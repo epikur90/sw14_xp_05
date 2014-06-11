@@ -1,9 +1,7 @@
 package com.sw14_xp_05.pinkee;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -11,9 +9,9 @@ import android.view.View;
 import android.widget.Button;
 
 /**
- * Created by ASUS on 14.05.2014.
+ * Created by ASUS on 04.06.2014.
  */
-public class BackgroundActivity extends ActionBarActivity {
+public class sendcolorActivity extends ActionBarActivity {
 
     private Button buttonBlue;
     private Button buttonLightBlue;
@@ -29,13 +27,15 @@ public class BackgroundActivity extends ActionBarActivity {
     public static final String MyPreferences = "MyPrefs";
     public static final String Mycolor = "Mycolor";
     public static final String Mytheme = "Mytheme";
+    public static final String MyRcolor = "MyRcolor";
+    public static final String MyScolor = "MyScolor";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_background);
+        setContentView(R.layout.activity_sendcolor);
 
-        final SharedPreferences   sharedpreferences = getSharedPreferences(MyPreferences, Context.MODE_PRIVATE);
+        final SharedPreferences sharedpreferences = getSharedPreferences(MyPreferences, Context.MODE_PRIVATE);
 
         String Colorchange = "#FFFFFF";
 
@@ -47,22 +47,21 @@ public class BackgroundActivity extends ActionBarActivity {
         View background = getWindow().getDecorView();
         background.setBackgroundColor(Color.parseColor(Colorchange));
 
-        this.buttonBlue = (Button) this.findViewById(R.id.buttonBlue);
-        this.buttonLightBlue = (Button) this.findViewById(R.id.buttonLightBlue);
-        this.buttonWhite = (Button) this.findViewById(R.id.buttonWhite);
-        this.buttonRed = (Button) this.findViewById(R.id.buttonRed);
-        this.buttonYellow = (Button) this.findViewById(R.id.buttonYellow);
-        this.buttonLigthGreen = (Button) this.findViewById(R.id.buttonLightGreen);
-        this.buttonGreen = (Button) this.findViewById(R.id.buttonGreen);
-        this.buttonOrange = (Button) this.findViewById(R.id.buttonOrange);
-        this.buttonPink = (Button) this.findViewById(R.id.buttonPink);
-        this.buttonPurple = (Button) this.findViewById(R.id.buttonPurple);
+        this.buttonBlue = (Button) this.findViewById(R.id.buttonSBlue);
+        this.buttonLightBlue = (Button) this.findViewById(R.id.buttonSLightBlue);
+        this.buttonWhite = (Button) this.findViewById(R.id.buttonSWhite);
+        this.buttonRed = (Button) this.findViewById(R.id.buttonSRed);
+        this.buttonYellow = (Button) this.findViewById(R.id.buttonSYellow);
+        this.buttonLigthGreen = (Button) this.findViewById(R.id.buttonSLightGreen);
+        this.buttonGreen = (Button) this.findViewById(R.id.buttonSGreen);
+        this.buttonOrange = (Button) this.findViewById(R.id.buttonSOrange);
+        this.buttonPink = (Button) this.findViewById(R.id.buttonSPink);
+        this.buttonPurple = (Button) this.findViewById(R.id.buttonSPurple);
 
         this.buttonBlue.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Editor editor = sharedpreferences.edit();
-                editor.remove(Mytheme);
-                editor.putString(Mycolor, "#ff1c49ff");
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(MyScolor, "#ff1c49ff");
                 editor.commit();
                 finish();
             }
@@ -70,9 +69,8 @@ public class BackgroundActivity extends ActionBarActivity {
 
         this.buttonLightBlue.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Editor editor = sharedpreferences.edit();
-                editor.remove(Mytheme);
-                editor.putString(Mycolor, "#1dd2ff");
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(MyScolor, "#1dd2ff");
                 editor.commit();
                 finish();
             }
@@ -80,9 +78,8 @@ public class BackgroundActivity extends ActionBarActivity {
 
         this.buttonWhite.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Editor editor = sharedpreferences.edit();
-                editor.remove(Mytheme);
-                editor.putString(Mycolor, "#ffffff");
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(MyScolor, "#ffffff");
                 editor.commit();
                 finish();
             }
@@ -90,9 +87,8 @@ public class BackgroundActivity extends ActionBarActivity {
 
         this.buttonRed.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Editor editor = sharedpreferences.edit();
-                editor.remove(Mytheme);
-                editor.putString(Mycolor, "#FF1C49");
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(MyScolor, "#FF1C49");
                 editor.commit();
                 finish();
             }
@@ -100,9 +96,8 @@ public class BackgroundActivity extends ActionBarActivity {
 
         this.buttonYellow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Editor editor = sharedpreferences.edit();
-                editor.remove(Mytheme);
-                editor.putString(Mycolor, "#fffc49");
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(MyScolor, "#fffc49");
                 editor.commit();
                 finish();
             }
@@ -110,9 +105,8 @@ public class BackgroundActivity extends ActionBarActivity {
 
         this.buttonLigthGreen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Editor editor = sharedpreferences.edit();
-                editor.remove(Mytheme);
-                editor.putString(Mycolor, "#55ff5c");
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(MyScolor, "#55ff5c");
                 editor.commit();
                 finish();
             }
@@ -120,9 +114,8 @@ public class BackgroundActivity extends ActionBarActivity {
 
         this.buttonGreen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Editor editor = sharedpreferences.edit();
-                editor.remove(Mytheme);
-                editor.putString(Mycolor, "#19aa07");
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(MyScolor, "#19aa07");
                 editor.commit();
                 finish();
             }
@@ -130,9 +123,8 @@ public class BackgroundActivity extends ActionBarActivity {
 
         this.buttonOrange.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Editor editor = sharedpreferences.edit();
-                editor.remove(Mytheme);
-                editor.putString(Mycolor, "#ff6a31");
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(MyScolor, "#ff6a31");
                 editor.commit();
                 finish();
             }
@@ -140,9 +132,8 @@ public class BackgroundActivity extends ActionBarActivity {
 
         this.buttonPink.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Editor editor = sharedpreferences.edit();
-                editor.remove(Mytheme);
-                editor.putString(Mycolor, "#ff1fe9");
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(MyScolor, "#ff1fe9");
                 editor.commit();
                 finish();
             }
@@ -150,9 +141,8 @@ public class BackgroundActivity extends ActionBarActivity {
 
         this.buttonPurple.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Editor editor = sharedpreferences.edit();
-                editor.putString(Mycolor, "#b166ff");
-                editor.remove(Mytheme);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(MyScolor, "#b166ff");
                 editor.commit();
                 finish();
             }

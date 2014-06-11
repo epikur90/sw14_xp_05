@@ -60,6 +60,8 @@ public class ChatActivity extends ActionBarActivity {
 
         this.buttonSend.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+                if (textFieldMessage.getText().toString().equals("")) return;
+
 				Message message = new Message(textFieldMessage.getText().toString(), contact);
 
                 // Send message to the server
@@ -78,6 +80,7 @@ public class ChatActivity extends ActionBarActivity {
 
         registerReceiver(registrationStatusReceiver, new IntentFilter(Common.ACTION_REGISTER));
         gcmUtil = new GcmUtil(getApplicationContext());
+
         SQLiteStorageHelper.getInstance(getApplicationContext()).registerObserver(messageList);
 
 

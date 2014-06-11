@@ -37,6 +37,7 @@
         android:layout_above="@+id/buttonSend"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/textviewshape"/>
+        android:background="@drawable/textviewshape"
+        android:alpha="0.70"/>
 
 </RelativeLayout>
