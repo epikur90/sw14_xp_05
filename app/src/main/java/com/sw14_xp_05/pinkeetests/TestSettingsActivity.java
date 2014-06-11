@@ -55,13 +55,21 @@ public class TestSettingsActivity extends ActivityInstrumentationTestCase2<Setti
         solo.goBack();
     }
 
-    public void testButtonSavefiles() {
-        solo.clickOnButton("save files");
+    public void testButtonChatSendColor() {
+
+        for( int i = 0; i < 10; i++)
+        {
+            solo.clickOnButton("chat send color");
+            solo.clickOnButton(i);
+        }
     }
 
-    public void testButtonSaveChat() {
-        solo.clickOnButton("save chat");
-        solo.goBack();
-    }
+    public void testButtonChatReceiveColor() {
 
+        for( int i = 0; i < 10; i++)
+        {
+            solo.clickOnButton("chat receive color");
+            solo.clickOnButton(i);
+        }
+    }
 }

@@ -77,14 +77,6 @@ public class SettingsActivity extends ActionBarActivity {
             }
         });
 
-        this.buttonSavechat = (Button) this.findViewById(R.id.ButtonSavechat);
-        this.buttonSavechat.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent newActivity0 = new Intent(SettingsActivity.this, SavechatActivity.class);
-                startActivity(newActivity0);
-            }
-        });
-
         this.buttonSendcolor = (Button) this.findViewById(R.id.Buttonsendcolor);
         this.buttonSendcolor.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
