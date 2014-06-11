@@ -29,6 +29,7 @@ public class Contact implements Serializable {
         this.email = "john.doe@yourmama.com";
         this.picture_link = "johndoecontactimage";
         this.lastMessage = new Date();
+        this.public_key = null;
     }
 
     public Contact(String forename, String name, String email, String picture_link) {
@@ -37,6 +38,8 @@ public class Contact implements Serializable {
         this.email = email;
         this.picture_link = picture_link;
         this.lastMessage = new Date();
+        this.public_key = null;
+
     }
 
     public Date getLastMessage() {

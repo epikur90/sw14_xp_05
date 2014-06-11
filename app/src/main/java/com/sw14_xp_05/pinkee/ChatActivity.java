@@ -189,18 +189,20 @@ public class ChatActivity extends ActionBarActivity {
         this.messageList.initAdapter();
 
         activeContact = this.contact;
+        SQLiteStorageHelper helper = SQLiteStorageHelper.getInstance(getBaseContext());
 
         String public_key_string = contact.getPublicKey();
-        if (public_key_string.equals("")) {
+        if (public_key_string == null) {
             //get public key from server
             try {
                 public_key_string = ServerUtilities.askPublicKeyString(contact.getEmail());
-                savePublicKeyString(public_key_string);
+                contact.setPublicKey(public_key_string);
+                helper.saveContact(contact);
                 PinKeeKee pkk_public = PinKeeKee.getObjectFromGson(public_key_string);
                 PublicKey public_key = null;
                 public_key = PinKeeKee.generatePublicKey(pkk_public);
                 encrypter = new PinkoCryptRSA(public_key);
-                Log.d("ChatActivity", "onCreate - public_key_string = " + public_key_string);
+                Log.d("ChatActivity", "onResume - public_key_string = " + public_key_string);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             } catch (InvalidKeySpecException e) {
@@ -210,6 +212,7 @@ public class ChatActivity extends ActionBarActivity {
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
+            Log.d("ChatActivity", "onResume - public key NOT found");
         } else {
             PinKeeKee pkk_public = PinKeeKee.getObjectFromGson(public_key_string);
             PublicKey public_key = null;
@@ -221,6 +224,8 @@ public class ChatActivity extends ActionBarActivity {
                 e.printStackTrace();
             }
             encrypter = new PinkoCryptRSA(public_key);
+            Log.d("ChatActivity", "onResume - public key found");
+
         }
 
 
