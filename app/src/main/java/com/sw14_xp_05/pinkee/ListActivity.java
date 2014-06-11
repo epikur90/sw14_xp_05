@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.sw14_xp_05.gcm.GcmUtil;
+
 import java.util.ArrayList;
 
 
@@ -34,7 +36,9 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
     private ContactListAdapter adapter;
     private ArrayList<Contact> valueList;
     private SQLiteStorageHelper dbhelper;
-  @Override
+    private GcmUtil gcmUtil;
+
+    @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_list);
@@ -87,6 +91,8 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
     });
 
     lv.setAdapter(adapter);
+
+      gcmUtil = new GcmUtil(getApplicationContext());
   }
 
   @Override

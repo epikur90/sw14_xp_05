@@ -79,7 +79,7 @@ public class ChatActivity extends ActionBarActivity {
 		}
 
         registerReceiver(registrationStatusReceiver, new IntentFilter(Common.ACTION_REGISTER));
-        gcmUtil = new GcmUtil(getApplicationContext());
+        //gcmUtil = new GcmUtil(getApplicationContext());
 
         SQLiteStorageHelper.getInstance(getApplicationContext()).registerObserver(messageList);
 

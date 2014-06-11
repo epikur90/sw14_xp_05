@@ -76,7 +76,7 @@ public class RegisterActivity extends ActionBarActivity {
         //if (checkPlayServices()) {
         	gcm = GoogleCloudMessaging.getInstance(context);
             regid = getRegistrationId(context);
-            
+
 //            if (regid.isEmpty()) {
                 registerInBackground();
 //            }
