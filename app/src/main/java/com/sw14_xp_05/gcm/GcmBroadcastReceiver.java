@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.gson.Gson;
 import com.sw14_xp_05.gcm.DataProvider.MessageType;
 import com.sw14_xp_05.pinkee.ChatActivity;
 import com.sw14_xp_05.pinkee.Common;
@@ -64,9 +65,15 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
   			} else {
 				String msg = intent.getStringExtra(DataProvider.COL_MESSAGE);
 
+
+                //just for debugging
                 PrivateKey private_key = PinKeeKee.loadPrivateKey(context);
+                PinKeeKee pkk_private = new PinKeeKee(private_key);
                 PinkoCryptRSA decrypter = new PinkoCryptRSA(private_key);
                 String decrypted_msg = decrypter.decryptData(msg);
+                Gson gson = new Gson();
+                Log.d("GcmUtil", "private_key_string = " + gson.toJson(pkk_private));
+
 
                 Log.d("GcmBroadcastProvider", "Message received: " + msg);
                 Log.d("GcmBroadcastProvider", "Message received (decrypted): " + decrypted_msg);

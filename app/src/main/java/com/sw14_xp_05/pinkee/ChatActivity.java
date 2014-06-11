@@ -98,6 +98,10 @@ public class ChatActivity extends ActionBarActivity {
                     ServerUtilities.send(encrypter.encryptData(txt), targetEmail);
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeySpecException e) {
+                    e.printStackTrace();
                 }
                 Log.d("ChatActivity", "Sending message to: " + targetEmail);
                 ContentValues values = new ContentValues(2);

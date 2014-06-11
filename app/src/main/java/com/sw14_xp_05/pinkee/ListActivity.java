@@ -40,6 +40,7 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
 
     @Override
   protected void onCreate(Bundle savedInstanceState) {
+    Log.d("ListActivity", "onCreate - start");
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_list);
 
@@ -91,8 +92,8 @@ public class ListActivity extends ActionBarActivity implements OnClickListener {
     });
 
     lv.setAdapter(adapter);
-
-      gcmUtil = new GcmUtil(getApplicationContext());
+    Log.d("ListActivity", "vor gcmUtil creation");
+    gcmUtil = new GcmUtil(getApplicationContext());
   }
 
   @Override

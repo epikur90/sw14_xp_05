@@ -2,6 +2,8 @@ package com.sw14_xp_05.pinkee;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -51,7 +53,15 @@ public class PinkoCryptRSA {
 
     }
 
-    public String encryptData(String data) throws IOException {
+    public String encryptData(String data) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
+        Log.d("PinkoCryptRSA", "before encryption = " + data);
+        //just for debugging
+        PinKeeKee pkk = new PinKeeKee(public_key);
+        Gson gson = new Gson();
+        Log.d("PinkoCryptRSA", "public_key_string = " + gson.toJson(pkk));
+
+
+
         if(public_key == null){
             return "ERROR: NO PUBLIC KEY";
         }
@@ -66,7 +76,7 @@ public class PinkoCryptRSA {
             e.printStackTrace();
         }
         //   Log.d("encryptData", "end of function");
-
+        Log.d("PinkoCryptRSA", "encrypted data = " + byteArrayToString(encryptedData));
         return byteArrayToString(encryptedData);
     }
 
