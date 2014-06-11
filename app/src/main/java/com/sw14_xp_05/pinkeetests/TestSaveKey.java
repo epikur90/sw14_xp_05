@@ -5,8 +5,6 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
 import com.robotium.solo.Solo;
-import com.sw14_xp_05.pinkee.ChatActivity;
-import com.sw14_xp_05.pinkee.MessageList;
 import com.sw14_xp_05.pinkee.PinKeeKee;
 import com.sw14_xp_05.pinkee.PinkoCryptRSA;
 import com.sw14_xp_05.pinkee.SettingsActivity;

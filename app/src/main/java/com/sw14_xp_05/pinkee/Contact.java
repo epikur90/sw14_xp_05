@@ -11,7 +11,7 @@ public class Contact implements Serializable {
     private String forename;
     private String name;
     private String email;
-    private String picture_link;
+    private String pictureLink;
     private Date lastMessage;
 
     public static final String DB_TABLE = "contact";
@@ -24,15 +24,15 @@ public class Contact implements Serializable {
         this.forename = "John";
         this.name = "Doe";
         this.email = "john.doe@yourmama.com";
-        this.picture_link = "johndoecontactimage";
+        this.pictureLink = "johndoecontactimage";
         this.lastMessage = new Date();
     }
 
-    public Contact(String forename, String name, String email, String picture_link) {
+    public Contact(String forename, String name, String email, String pictureLink) {
         this.forename = forename;
         this.name = name;
         this.email = email;
-        this.picture_link = picture_link;
+        this.pictureLink = pictureLink;
         this.lastMessage = new Date();
     }
 
@@ -68,12 +68,12 @@ public class Contact implements Serializable {
         this.email = email;
     }
 
-    public String getPicture_link() {
-        return picture_link;
+    public String getPictureLink() {
+        return pictureLink;
     }
 
-    public void setPicture_link(String picture_link) {
-        this.picture_link = picture_link;
+    public void setPictureLink(String pictureLink) {
+        this.pictureLink = pictureLink;
     }
 
 
@@ -84,6 +84,6 @@ public class Contact implements Serializable {
 
         return forename + " " + name;
         //return "Contact [forename=" + forename + ", name=" + name +
-                //", email=" + email + ", picture_link=" +picture_link + "]";
+                //", email=" + email + ", pictureLink=" +pictureLink + "]";
     }
 }

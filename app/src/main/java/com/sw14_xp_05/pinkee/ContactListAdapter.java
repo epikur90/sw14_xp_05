@@ -1,8 +1,13 @@
 package com.sw14_xp_05.pinkee;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Environment;
 import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +15,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 
 import com.google.android.gms.plus.model.people.Person;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -63,9 +74,26 @@ public class ContactListAdapter extends BaseAdapter {
         }
 
         Contact contact = searchArrayList.get(position);
+        Log.d("#contactimage", contact.getPictureLink());
+
+        String path = Environment.getExternalStorageDirectory() + "/pinkeeimages/" + contact.getEmail()+".jpg";
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 5;
+
+        File file = new File(path);
+
+            if (file.exists() && file != null) {
+
+                    Bitmap bmap = BitmapFactory.decodeFile(path, options);
+                if(bmap != null)
+                    holder.contactImage.setImageBitmap(bmap);
+            } else {
+                Log.e("contact list adapter", "File Error");
+            }
+
 
         holder.contactName.setText(searchArrayList.get(position).toString());
-        //holder.contactImage.setImage
 
         return convertView;
     }

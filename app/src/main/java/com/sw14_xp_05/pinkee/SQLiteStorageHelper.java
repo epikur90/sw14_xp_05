@@ -157,7 +157,7 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             String strFilter = Contact.DB_COL_EMAIL + "= '" + contact.getEmail() +"'";
             values.put(Contact.DB_COL_FORENAME, contact.getForename());
             values.put(Contact.DB_COL_NAME, contact.getName());
-            values.put(Contact.DB_COL_PICTURE, contact.getPicture_link());
+            values.put(Contact.DB_COL_PICTURE, contact.getPictureLink());
 
             result = db.update(Contact.DB_TABLE, values, strFilter, null);
 
@@ -167,7 +167,7 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             values.put(Contact.DB_COL_FORENAME, contact.getForename());
             values.put(Contact.DB_COL_NAME, contact.getName());
             values.put(Contact.DB_COL_EMAIL, contact.getEmail());
-            values.put(Contact.DB_COL_PICTURE, contact.getPicture_link());
+            values.put(Contact.DB_COL_PICTURE, contact.getPictureLink());
 
             result = db.insert(Contact.DB_TABLE, null, values);
         }
@@ -185,7 +185,17 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
 
     public ArrayList<Contact> getContacts(){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * from " + Contact.DB_TABLE, null);
+        String select = "select " + Contact.DB_TABLE + ".*, max(" + Message.DB_COL_DATE + ") as last_message" +
+                " from " + Contact.DB_TABLE + ", " + Message.DB_TABLE +
+                " where " + Contact.DB_COL_EMAIL + " = " + Message.DB_COL_CONTACT +
+                " group by " + Contact.DB_COL_EMAIL +
+                " union select *, 0 as last_message from " + Contact.DB_TABLE +
+                " except select " + Contact.DB_TABLE + ".*, 0 as last_message" +
+                " from " + Contact.DB_TABLE + ", " + Message.DB_TABLE +
+                " where " + Contact.DB_COL_EMAIL + " = " + Message.DB_COL_CONTACT +
+                " order by last_message desc";
+
+        Cursor cursor = db.rawQuery(select, null);
 
         ArrayList<Contact> contacts = new ArrayList<Contact>();
         while (cursor.moveToNext()){
@@ -193,7 +203,7 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             contact.setForename( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_FORENAME )));
             contact.setName( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_NAME )));
             contact.setEmail( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_EMAIL )));
-            contact.setPicture_link( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_PICTURE )));
+            contact.setPictureLink(cursor.getString(cursor.getColumnIndex(Contact.DB_COL_PICTURE)));
             contacts.add(contact);
         }
         cursor.close();
@@ -213,7 +223,7 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             contact.setForename(cursor.getString(cursor.getColumnIndex(Contact.DB_COL_FORENAME)));
             contact.setName( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_NAME )));
             contact.setEmail( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_EMAIL )));
-            contact.setPicture_link( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_PICTURE )));
+            contact.setPictureLink(cursor.getString(cursor.getColumnIndex(Contact.DB_COL_PICTURE)));
         }
 
         cursor.close();

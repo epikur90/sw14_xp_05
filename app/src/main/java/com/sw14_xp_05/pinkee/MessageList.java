@@ -7,6 +7,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import android.util.Log;
 
+import java.util.Date;
+
 public class MessageList extends ListView {
 	
 	//private ArrayAdapter<Message> listAdapter;

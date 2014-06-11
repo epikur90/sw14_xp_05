@@ -10,7 +10,8 @@
         android:id="@+id/wrapper"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#77aaff">
         <TextView
             android:id="@+id/messageText"
             android:layout_width="wrap_content"

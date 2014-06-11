@@ -16,9 +16,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.os.Environment;
+import java.io.File;
+import android.widget.Toast;
+import android.graphics.Bitmap.CompressFormat;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.FileOutputStream;
 
 public class ProfileActivity extends ActionBarActivity {
 
@@ -41,6 +46,22 @@ public class ProfileActivity extends ActionBarActivity {
         this.contact =  (Contact) getIntent().getSerializableExtra("contact");
 
 
+        String path = Environment.getExternalStorageDirectory() + "/pinkeeimages/" + contact.getEmail()+".jpg";
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 5;
+        //options.inJustDecodeBounds = true;
+
+        File sddir = new File(path);
+        if (!sddir.mkdirs()) {
+            if (sddir.exists()) {
+            } else {
+                Log.e("profile activity", "File Error");
+            }
+        }
+
+        Bitmap bmap = BitmapFactory.decodeFile(path, options);
+
         //TextView forename_view = (TextView) findViewById(R.id.forenameView);
         //forename_view.setText(contact.getForename());
 
@@ -51,6 +72,8 @@ public class ProfileActivity extends ActionBarActivity {
         email = (TextView) findViewById(R.id.emailView);
         email.setText(contact.getEmail());
         profileImageView = (ImageView) findViewById(R.id.profilePictureView);
+        if (bmap != null)
+            profileImageView.setImageBitmap(bmap);
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,10 +88,31 @@ public class ProfileActivity extends ActionBarActivity {
         try {
             final Uri imageUri = data.getData();
             Log.d("#uri", imageUri.toString());
+
+            String path = Environment.getExternalStorageDirectory() + "/pinkeeimages/";
+            File sddir = new File(path);
+            if (!sddir.mkdirs()) {
+                if (sddir.exists()) {
+                } else {
+                    Toast.makeText(getApplicationContext(), "Folder error", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
             final InputStream imageStream = getContentResolver().openInputStream(imageUri);
             final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+
+            try {
+                FileOutputStream fos = new FileOutputStream(path + contact.getEmail() + ".jpg");
+                selectedImage.compress(CompressFormat.JPEG, 10, fos);
+                Toast.makeText(getApplicationContext(), "Image saved.", Toast.LENGTH_SHORT).show();
+                fos.flush();
+                fos.close();
+            } catch (Exception e) {
+                Log.e("profile activity", e.toString());
+            }
             profileImageView.setImageBitmap(selectedImage);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -79,7 +123,6 @@ public class ProfileActivity extends ActionBarActivity {
         Log.i("ProfileActivity", "onPause");
         contact.setForename(forename.getText().toString());
         contact.setName(name.getText().toString());
-        //contact.setEmail(email.getText().toString());
         SQLiteStorageHelper dbhelper = SQLiteStorageHelper.getInstance(getBaseContext());
         dbhelper.saveContact(contact);
     }

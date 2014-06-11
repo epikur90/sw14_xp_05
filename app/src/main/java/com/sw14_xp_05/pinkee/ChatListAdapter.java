@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ChatListAdapter extends BaseAdapter {
     private static ArrayList<Message> searchArrayList;
@@ -26,6 +28,12 @@ public class ChatListAdapter extends BaseAdapter {
     public ChatListAdapter(Context context, ArrayList<Message> results) {
         searchArrayList = results;
         inflater = LayoutInflater.from(context);
+
+        add(new Message("1", null, new Date(333), true));
+        add(new Message("2", null, new Date("Sat, 31 May 2014 13:30:00 GMT"), true));
+        add(new Message("3", null, new Date(new Date().getTime() - 40 * 1000 * 60 * 60 * 24), true));
+        add(new Message("4", null, new Date(new Date().getTime() - 3 * 1000 * 60 * 60 * 24), true));
+        add(new Message("5", null, new Date(new Date().getTime() - 1000 * 60 * 60 * 24), true));
     }
 
     public int getCount() {
@@ -74,21 +82,60 @@ public class ChatListAdapter extends BaseAdapter {
         Message message = searchArrayList.get(position);
 
         holder.messageText.setText(searchArrayList.get(position).getMessageText());
-        holder.date.setText(searchArrayList.get(position).getDate().toString());
+
+        String dateStr = "";
+        String[] weekdays = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+                             "Saturday"};
+        String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct",
+                           "Nov", "Dec"};
+        Date date = searchArrayList.get(position).getDate();
+        Calendar cal = Calendar.getInstance();
+        cal.setFirstDayOfWeek(Calendar.MONDAY);
+
+        cal.setTime(new Date());
+        int dayNow = cal.get(Calendar.DAY_OF_MONTH);
+        int monthNow = cal.get(Calendar.MONTH);
+        int yearNow = cal.get(Calendar.YEAR);
+
+        cal.setTime(date);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
+
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minute = cal.get(Calendar.MINUTE);
+
+        String time = (hour < 10 ? ("0" + hour) : hour) + ":" +
+                (minute < 10 ? ("0" + minute) : minute);
+
+        if ( year == yearNow ) {
+            dateStr = months[month] + " " + day + ", ";
+
+            if (month == monthNow) {
+
+                if (day == dayNow) {
+                    dateStr = "";
+                } else if (dayNow - day == 1)
+                    dateStr = "Yesterday, ";
+                else if (dayNow - day < 7)
+                    dateStr = weekdays[cal.get(Calendar.DAY_OF_WEEK) - Calendar.SUNDAY] + ", ";
+            }
+        } else {
+            dateStr = year + " " + months[month] + " " + day + ", ";
+        }
+
+        dateStr += time;
+
+        holder.date.setText(dateStr);
 
         RelativeLayout wrapper = (RelativeLayout) convertView.findViewById(R.id.wrapper);
         if(message.isIncoming()) {
-            wrapper.setGravity( Gravity.RIGHT);
+            wrapper.setGravity( Gravity.LEFT);
             wrapper.setBackgroundColor(Color.parseColor(sendchange));
         } else {
-            wrapper.setGravity( Gravity.LEFT);
+            wrapper.setGravity( Gravity.RIGHT);
             wrapper.setBackgroundColor(Color.parseColor(receivechange));
         }
-        //wrapper.setGravity(position % 2 != 0 ? Gravity.LEFT : Gravity.RIGHT);
-        //wrapper.setBackgroundColor(position % 2 != 0 ? Color.LTGRAY: Color.TRANSPARENT);
-
-
-
 
         TextView field = (TextView) convertView.findViewById(R.id.messageText);
         TextView dateField = (TextView) convertView.findViewById(R.id.date);
@@ -100,7 +147,6 @@ public class ChatListAdapter extends BaseAdapter {
 
     public void add(Message message) {
         searchArrayList.add(message);
-        //TODO message.getContact().setLastMessage(message.getDate());
         notifyDataSetChanged();
     }
 
