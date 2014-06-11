@@ -28,12 +28,11 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
             + Contact.DB_COL_NAME + " text,"
             + Contact.DB_COL_PICTURE + " text)";
     private static SQLiteStorageHelper instance;
-    private ArrayList<MessageList> observers;
+    private MessageList observer;
 
     private SQLiteStorageHelper(Context context, String name, CursorFactory factory,
                                 int version){
         super(context, name, factory, version);
-        observers = new ArrayList<MessageList>();
     }
 
     private SQLiteStorageHelper(Context context){
@@ -49,10 +48,7 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
     }
 
     public void registerObserver(MessageList observer){
-        if(!observers.contains(observer)){
-            this.observers.add(observer);
-            Log.d("observer", "added " + observer);
-        }
+        this.observer = observer;
     }
 
     @Override
@@ -108,8 +104,8 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
     }
 
     private void notifyObservers(Message message){
-        for(MessageList ml : observers){
-            ml.updateMessages(message);
+        if (observer != null) {
+            observer.updateMessages(message);
         }
     }
 
@@ -209,13 +205,17 @@ public class SQLiteStorageHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * from " + Contact.DB_TABLE +
                          " where " + Contact.DB_COL_EMAIL +"='" + email +"'", null);
-        cursor.moveToFirst();
 
-        Contact contact = new Contact();
-        contact.setForename(cursor.getString(cursor.getColumnIndex(Contact.DB_COL_FORENAME)));
-        contact.setName( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_NAME )));
-        contact.setEmail( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_EMAIL )));
-        contact.setPicture_link( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_PICTURE )));
+        Contact contact = null;
+
+        if (cursor.moveToFirst()) {
+            contact = new Contact();
+            contact.setForename(cursor.getString(cursor.getColumnIndex(Contact.DB_COL_FORENAME)));
+            contact.setName( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_NAME )));
+            contact.setEmail( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_EMAIL )));
+            contact.setPicture_link( cursor.getString( cursor.getColumnIndex(Contact.DB_COL_PICTURE )));
+        }
+
         cursor.close();
         db.close();
         return contact;
